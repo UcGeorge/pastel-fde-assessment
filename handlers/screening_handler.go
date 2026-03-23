@@ -25,7 +25,7 @@ func (h *ScreeningHandler) Page(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	h.tmpl.ExecuteTemplate(w, "layout", map[string]any{
 		"Page":    "screening",
-		"Title":   "PEP & Sanctions Screening — Sigma",
+		"Title":   "PEP & Sanctions Screening - Sigma",
 		"UseMock": h.useMock,
 	})
 }

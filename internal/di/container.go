@@ -17,7 +17,7 @@ func NewContainer() *do.RootScope {
 		return config.Load(), nil
 	})
 
-	// Sigma SDK Client — either mock or live depending on config
+	// Sigma SDK Client - either mock or live depending on config
 	do.Provide(injector, func(i do.Injector) (sigma.SigmaClient, error) {
 		cfg := do.MustInvoke[*config.Config](i)
 

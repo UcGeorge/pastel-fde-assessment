@@ -25,7 +25,7 @@ func (h *AdverseMediaHandler) Page(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	h.tmpl.ExecuteTemplate(w, "layout", map[string]any{
 		"Page":    "adverse_media",
-		"Title":   "Adverse Media Screening — Sigma",
+		"Title":   "Adverse Media Screening - Sigma",
 		"UseMock": h.useMock,
 	})
 }

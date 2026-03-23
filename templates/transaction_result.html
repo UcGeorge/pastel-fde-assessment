@@ -74,7 +74,8 @@
                         {{if eq .Response.Data.Reason.Severity "low"}}text-emerald-400
                         {{else if eq .Response.Data.Reason.Severity "medium"}}text-amber-400
                         {{else}}text-red-400{{end}}">
-                        {{.Response.Data.RiskScore}}
+                        {{if eq .Response.Data.RiskScore "undefined"}}-
+                        {{else}}{{.Response.Data.RiskScore}}{{end}}
                     </p>
                 </div>
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide
@@ -93,9 +94,9 @@
             {{else}}border-red-500/20{{end}}">
             <p class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold mb-2">How to interpret the risk score</p>
             <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 text-xs text-slate-400">
-                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0"></span> <strong class="text-slate-300">0–33 (Low)</strong> — Minimal risk signals. Allow transaction.</span>
-                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400 flex-shrink-0"></span> <strong class="text-slate-300">34–66 (Medium)</strong> — Moderate signals. Flag for review.</span>
-                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-400 flex-shrink-0"></span> <strong class="text-slate-300">67–100 (High)</strong> — Strong fraud signal. Block immediately.</span>
+                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0"></span> <strong class="text-slate-300">0–33 (Low)</strong> - Minimal risk signals. Allow transaction.</span>
+                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400 flex-shrink-0"></span> <strong class="text-slate-300">34–66 (Medium)</strong> - Moderate signals. Flag for review.</span>
+                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-400 flex-shrink-0"></span> <strong class="text-slate-300">67–100 (High)</strong> - Strong fraud signal. Block immediately.</span>
             </div>
         </div>
     </div>
@@ -150,7 +151,7 @@
                 </div>
                 <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
                     <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Dormant Account</p>
-                    <p class="text-sm font-medium {{if .Input.IsDormantAccount}}text-amber-400{{else}}text-slate-200{{end}}">{{if .Input.IsDormantAccount}}Yes — High Risk{{else}}No{{end}}</p>
+                    <p class="text-sm font-medium {{if .Input.IsDormantAccount}}text-amber-400{{else}}text-slate-200{{end}}">{{if .Input.IsDormantAccount}}Yes - High Risk{{else}}No{{end}}</p>
                 </div>
                 <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
                     <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Sender Account</p>
@@ -185,11 +186,11 @@
                 </div>
                 <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
                     <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Account Banned</p>
-                    <p class="text-sm font-medium {{if .Input.IsBanned}}text-red-400{{else}}text-slate-200{{end}}">{{if .Input.IsBanned}}Yes — Flagged{{else}}No{{end}}</p>
+                    <p class="text-sm font-medium {{if .Input.IsBanned}}text-red-400{{else}}text-slate-200{{end}}">{{if .Input.IsBanned}}Yes - Flagged{{else}}No{{end}}</p>
                 </div>
                 <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
                     <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Identity Verified</p>
-                    <p class="text-sm font-medium {{if .Input.IsIdentityVerified}}text-emerald-400{{else}}text-amber-400{{end}}">{{if .Input.IsIdentityVerified}}Yes — KYC Passed{{else}}No{{end}}</p>
+                    <p class="text-sm font-medium {{if .Input.IsIdentityVerified}}text-emerald-400{{else}}text-amber-400{{end}}">{{if .Input.IsIdentityVerified}}Yes - KYC Passed{{else}}No{{end}}</p>
                 </div>
                 <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
                     <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Account Type</p>
@@ -265,8 +266,8 @@
                 </div>
                 <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
                     <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1.5">Rule Result</p>
-                    <p class="text-sm font-medium text-slate-200">{{.Response.Data.RuleResult}}</p>
-                    <p class="text-[10px] text-slate-600 mt-1.5">The outcome of the fraud rule engine — which rule set triggered this result.</p>
+                    <p class="text-sm font-medium text-slate-200">{{if .Response.Data.RuleResult}}{{.Response.Data.RuleResult}}{{else}}<span class="text-slate-600">—</span>{{end}}</p>
+                    <p class="text-[10px] text-slate-600 mt-1.5">The outcome of the fraud rule engine; which rule set triggered this result.</p>
                 </div>
             </div>
 
@@ -281,13 +282,13 @@
                     </div>
                     <div class="sm:col-span-2">
                         <p class="text-[10px] text-slate-600 mb-1">Reason Message</p>
-                        <p class="text-sm font-medium text-slate-200 leading-relaxed">{{.Response.Data.Reason.Message}}</p>
+                        <p class="text-sm font-medium text-slate-200 leading-relaxed">{{if .Response.Data.Reason.Message}}{{.Response.Data.Reason.Message}}{{else}}<span class="text-slate-600">—</span>{{end}}</p>
                         <p class="text-[10px] text-slate-500 mt-1">Human-readable explanation of why this action was recommended.</p>
                     </div>
                     <div class="sm:col-span-3 pt-2 border-t border-surface-800/40">
                         <p class="text-[10px] text-slate-600 mb-1">Triggering Rule</p>
                         <p class="text-sm font-medium text-slate-200">
-                            {{.Response.Data.Reason.Rule.Name}}
+                            {{if .Response.Data.Reason.Rule.Name}}{{.Response.Data.Reason.Rule.Name}}{{else}}<span class="text-slate-600">—</span>{{end}}
                             {{if .Response.Data.Reason.Rule.ID}}<span class="text-slate-500 text-xs ml-2">(ID: {{.Response.Data.Reason.Rule.ID}})</span>{{end}}
                         </p>
                         <p class="text-[10px] text-slate-500 mt-1">The specific fraud detection rule that matched this transaction's profile.</p>
@@ -305,11 +306,11 @@
                         <div class="space-y-1.5">
                             <div class="flex items-center justify-between text-xs px-3 py-2 rounded-lg bg-surface-900/60 border border-surface-800/40">
                                 <span class="text-slate-500">PEP Match</span>
-                                <span class="font-medium text-slate-200">{{.Response.Data.Screening.Sender.PEP}}</span>
+                                <span class="font-medium text-slate-200">{{if .Response.Data.Screening.Sender.PEP}}{{.Response.Data.Screening.Sender.PEP}}{{else}}<span class="text-slate-600">—</span>{{end}}</span>
                             </div>
                             <div class="flex items-center justify-between text-xs px-3 py-2 rounded-lg bg-surface-900/60 border border-surface-800/40">
                                 <span class="text-slate-500">Sanctions Match</span>
-                                <span class="font-medium text-slate-200">{{.Response.Data.Screening.Sender.Sanction}}</span>
+                                <span class="font-medium text-slate-200">{{if .Response.Data.Screening.Sender.Sanction}}{{.Response.Data.Screening.Sender.Sanction}}{{else}}<span class="text-slate-600">—</span>{{end}}</span>
                             </div>
                         </div>
                     </div>
@@ -318,11 +319,11 @@
                         <div class="space-y-1.5">
                             <div class="flex items-center justify-between text-xs px-3 py-2 rounded-lg bg-surface-900/60 border border-surface-800/40">
                                 <span class="text-slate-500">PEP Match</span>
-                                <span class="font-medium text-slate-200">{{.Response.Data.Screening.Receiver.PEP}}</span>
+                                <span class="font-medium text-slate-200">{{if .Response.Data.Screening.Receiver.PEP}}{{.Response.Data.Screening.Receiver.PEP}}{{else}}<span class="text-slate-600">—</span>{{end}}</span>
                             </div>
                             <div class="flex items-center justify-between text-xs px-3 py-2 rounded-lg bg-surface-900/60 border border-surface-800/40">
                                 <span class="text-slate-500">Sanctions Match</span>
-                                <span class="font-medium text-slate-200">{{.Response.Data.Screening.Receiver.Sanction}}</span>
+                                <span class="font-medium text-slate-200">{{if .Response.Data.Screening.Receiver.Sanction}}{{.Response.Data.Screening.Sender.Sanction}}{{else}}<span class="text-slate-600">—</span>{{end}}</span>
                             </div>
                         </div>
                     </div>

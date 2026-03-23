@@ -8,11 +8,11 @@ The goal is not just to make API calls. You are expected to build a clear, well-
 
 **Sigma exposes three product areas relevant to this assessment:**
 
-- **Transaction Monitoring** — Analyses transactions in real time using AI to detect fraudulent patterns, flag suspicious activity, and return a risk level and recommended action.
+- **Transaction Monitoring:** Analyses transactions in real time using AI to detect fraudulent patterns, flag suspicious activity, and return a risk level and recommended action.
 
-- **PEP & Sanctions Screening** — Screens individuals or entities against global Politically Exposed Persons PEP) lists and international sanctions databases OFAC, UN, EU, etc.) to prevent regulated entities from transacting with prohibited parties.
+- **PEP & Sanctions Screening:** Screens individuals or entities against global Politically Exposed Persons PEP) lists and international sanctions databases OFAC, UN, EU, etc.) to prevent regulated entities from transacting with prohibited parties.
 
-- **Adverse Media Screening** — Searches news and media sources for negative coverage linked to an individual or entity, such as fraud allegations, criminal investigations, or financial misconduct.
+- **Adverse Media Screening:** Searches news and media sources for negative coverage linked to an individual or entity, such as fraud allegations, criminal investigations, or financial misconduct.
 
 ### **What we are evaluating**
 
@@ -47,7 +47,7 @@ You are to make use of the following API credentials:
 3. Display the following clearly in your applicationʼs output:
    1. The transaction details you sent to Sigma (reference, amount, currency, sender, receiver, channel, type, date)
    2. The full Sigma response, clearly formatted
-   3. The final action Sigma recommends (allow / flag / block) — prominently displayed
+   3. The final action Sigma recommends (allow / flag / block), prominently displayed
    4. The risk level returned
 
 ## **Task 2: PEP & Sanctions Screening**

@@ -1,10 +1,10 @@
-# Technical Deep Dive — Sigma AI Compliance Dashboard
+# Technical Deep Dive - Sigma AI Compliance Dashboard
 
 ← [Back to README](README.md)
 
 This document covers the architecture, engineering decisions, and implementation details behind the Sigma AI Compliance Dashboard. Intended for engineers reviewing the codebase.
 
-**Pastel FDE Assessment — George Uche-Umeh**
+**Pastel FDE Assessment - George Uche-Umeh**
 
 A full-stack compliance demonstration platform that integrates three of Pastel's Sigma AI product capabilities via a clean, browser-based interface. Built in Go with a focus on clean architecture, correct API usage, and clear data presentation for both technical and non-technical audiences.
 
@@ -15,7 +15,7 @@ A full-stack compliance demonstration platform that integrates three of Pastel's
 
 ## Table of Contents
 
-- [Sigma AI Compliance Dashboard](#sigma-ai-compliance-dashboard)
+- [Technical Deep Dive - Sigma AI Compliance Dashboard](#technical-deep-dive---sigma-ai-compliance-dashboard)
   - [Table of Contents](#table-of-contents)
   - [What This Application Does](#what-this-application-does)
   - [Technology Stack \& Why Go](#technology-stack--why-go)
@@ -62,7 +62,7 @@ The three capabilities demonstrated are:
 | :---------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Transaction Monitoring**    | Submits a financial transaction to Sigma's AI engine for real-time fraud risk analysis. Returns a recommended action (approve / flag / block), a numeric risk score, the triggering rule, and inline PEP/sanctions checks on the transaction parties.                       |
 | **PEP & Sanctions Screening** | Screens an individual's name against global Politically Exposed Persons (PEP) lists and international sanctions databases (OFAC, UN, EU, UK, and others). Returns match confidence scores and full entity profiles for any hits found.                                      |
-| **Adverse Media Screening**   | Searches global news and media archives for negative coverage tied to an individual or entity — covering fraud allegations, criminal investigations, money laundering, and financial misconduct. Operates asynchronously, with results delivered via webhook in production. |
+| **Adverse Media Screening**   | Searches global news and media archives for negative coverage tied to an individual or entity covering fraud allegations, criminal investigations, money laundering, and financial misconduct. Operates asynchronously, with results delivered via webhook in production. |
 
 ---
 
@@ -70,18 +70,18 @@ The three capabilities demonstrated are:
 
 ### Language: Go
 
-Go was selected as the primary language because it is my most fluent server-side language. For a technical assessment with a tight deadline, working in the language I know best let me focus on what matters most — getting the API integration right, building a clean architecture, and presenting data clearly — rather than fighting the language.
+Go was selected as the primary language because it is my most fluent server-side language. For a technical assessment with a tight deadline, working in the language I know best let me focus on what matters most: getting the API integration right, building a clean architecture, and presenting data clearly, rather than fighting the language.
 
 Go also offers real practical advantages for this kind of integration work:
 
-- **Compiled and fast** — startup time is near-instant; the binary runs without a runtime environment
-- **Excellent standard library** — `net/http`, `html/template`, and `encoding/json` cover everything needed without external frameworks
-- **Strong typing** — the type system enforces correct API payloads at compile time; any field mismatch is caught before the code runs
-- **Small, readable code** — request/response models are self-documenting structs with JSON struct tags
+- **Compiled and fast;** startup time is near-instant; the binary runs without a runtime environment
+- **Excellent standard library;** `net/http`, `html/template`, and `encoding/json` cover everything needed without external frameworks
+- **Strong typing;** the type system enforces correct API payloads at compile time; any field mismatch is caught before the code runs
+- **Small, readable code;** request/response models are self-documenting structs with JSON struct tags
 
 ### Frontend: HTMX + Tailwind CSS
 
-Rather than building a separate Single-Page Application and a REST API, the frontend uses **HTMX** to progressively enhance the Go-rendered HTML. When a user submits a form, HTMX fires an HTTP POST to the Go server and swaps only the result section of the page with the server's response — no page reload, no JavaScript framework, no build step.
+Rather than building a separate Single-Page Application and a REST API, the frontend uses **HTMX** to progressively enhance the Go-rendered HTML. When a user submits a form, HTMX fires an HTTP POST to the Go server and swaps only the result section of the page with the server's response - no page reload, no JavaScript framework, no build step.
 
 **Why this matters for an FDE context:** HTMX lets a backend-focused engineer (like a typical FDE) build rich, interactive UIs without JavaScript expertise. The result is a simpler, more maintainable codebase with zero frontend build tooling.
 
@@ -89,7 +89,7 @@ Rather than building a separate Single-Page Application and a REST API, the fron
 
 ### Dependency Injection: `samber/do`
 
-Rather than passing dependencies through function arguments across every layer, the application uses a small DI container (`samber/do/v2`). This lets the application decide at startup whether to wire up the live Sigma client or the mock client — based on a single environment variable — without touching a single line of business logic.
+Rather than passing dependencies through function arguments across every layer, the application uses a small DI container (`samber/do/v2`). This lets the application decide at startup whether to wire up the live Sigma client or the mock client - based on a single environment variable - without touching a single line of business logic.
 
 ### Logging: `zerolog`
 
@@ -102,7 +102,7 @@ Structured JSON logging via `zerolog`, readable in development mode with coloure
 ```
 pastel-fde-assessment/
 │
-├── main.go                    # Entry point — wires everything together
+├── main.go                    # Entry point - wires everything together
 │
 ├── internal/
 │   ├── config/
@@ -112,7 +112,7 @@ pastel-fde-assessment/
 │
 ├── pkg/
 │   └── sigma/                 # Custom Sigma SDK (see section below)
-│       ├── interface.go       # SigmaClient interface — the contract
+│       ├── interface.go       # SigmaClient interface - the contract
 │       ├── client.go          # Live HTTP client implementation
 │       ├── mock.go            # Mock client for UI testing
 │       ├── transaction.go     # Request/response models for Transaction Monitoring
@@ -179,7 +179,7 @@ Browser (HTMX forms)
 2. HTMX fires `POST /transaction/submit` with the form body
 3. `TransactionHandler.Submit` parses every form field (strings, floats, booleans, timestamps)
 4. A `TransactionInput` struct is populated and passed to `TransactionService.SubmitTransaction`
-5. The service maps the input into Sigma's `SubmitTransactionRequest` structure — setting optional pointer fields to `nil` when empty, preventing spurious data from being sent
+5. The service maps the input into Sigma's `SubmitTransactionRequest` structure - setting optional pointer fields to `nil` when empty, preventing spurious data from being sent
 6. The SDK client serialises the struct to JSON, attaches `apiKey` and `apiSecret` headers, and POSTs to `api/v1/transaction-monitoring/instant`
 7. The response is decoded into a typed `TransactionResponse`, returned up the chain
 8. The handler renders `transaction_result.html` with the result, which HTMX swaps into the page
@@ -211,21 +211,21 @@ type SigmaClient interface {
 }
 ```
 
-All services depend on this interface, not on the concrete `*Client`. This means the live client and the mock client are interchangeable — the business logic is completely unaware of which one it's talking to.
+All services depend on this interface, not on the concrete `*Client`. This means the live client and the mock client are interchangeable - the business logic is completely unaware of which one it's talking to.
 
 ### Live Client (`client.go`)
 
 The live client makes real HTTP requests to the Sigma API. Key design decisions:
 
-- **Two base URLs** — Transaction Monitoring uses `sigmaprod.sabipay.com`; PEP, Sanctions, and Adverse Media use `sigmaaml.sabipay.com`. The client has separate `doSigmaRequest` and `doAMLRequest` methods that route to the correct base.
-- **Custom header auth** — Sigma uses `apiKey` and `apiSecret` as request headers (not `Authorization: Bearer`). The client sets these on every outgoing request.
-- **10-second timeout** — prevents the server from hanging indefinitely on a slow Sigma response.
-- **Structured error handling** — non-2xx responses are decoded into `SigmaAPIError`, which wraps typed sentinel errors (`ErrUnauthorized`, `ErrRateLimited`, etc.) so callers can use `errors.Is` to handle specific failure modes.
-- **Body draining** — after reading the response, the remaining body bytes are always discarded and the body closed, preventing connection leaks.
+- **Two base URLs** - Transaction Monitoring uses `sigmaprod.sabipay.com`; PEP, Sanctions, and Adverse Media use `sigmaaml.sabipay.com`. The client has separate `doSigmaRequest` and `doAMLRequest` methods that route to the correct base.
+- **Custom header auth** - Sigma uses `apiKey` and `apiSecret` as request headers (not `Authorization: Bearer`). The client sets these on every outgoing request.
+- **10-second timeout** - prevents the server from hanging indefinitely on a slow Sigma response.
+- **Structured error handling** - non-2xx responses are decoded into `SigmaAPIError`, which wraps typed sentinel errors (`ErrUnauthorized`, `ErrRateLimited`, etc.) so callers can use `errors.Is` to handle specific failure modes.
+- **Body draining** - after reading the response, the remaining body bytes are always discarded and the body closed, preventing connection leaks.
 
 ### Typed Request Models (`transaction.go`, `aml.go`, `adverse_media.go`)
 
-Every field the Sigma API accepts is represented as a named Go type. Optional fields use pointer types (`*string`, `*bool`, `*float64`) so that `omitempty` in the JSON struct tag causes them to be omitted entirely when not provided — rather than sending zero-value noise like `"email": ""` or `"balanceBefore": 0`.
+Every field the Sigma API accepts is represented as a named Go type. Optional fields use pointer types (`*string`, `*bool`, `*float64`) so that `omitempty` in the JSON struct tag causes them to be omitted entirely when not provided - rather than sending zero-value noise like `"email": ""` or `"balanceBefore": 0`.
 
 Enum values (transaction type, channel, account type, severity level, action type) are defined as named string constants:
 
@@ -240,7 +240,7 @@ This makes incorrect values impossible to express at the call site.
 
 ### Mock Client (`mock.go`)
 
-The mock client implements `SigmaClient` with randomised but realistic responses — realistic enough to exercise every part of the result templates. It generates:
+The mock client implements `SigmaClient` with randomised but realistic responses - realistic enough to exercise every part of the result templates. It generates:
 
 - Random risk scores, rule names, reason codes and messages
 - Random PEP/sanctions match results with realistic entity profiles (names, aliases, positions, political party affiliations, birth dates, associated countries)
@@ -332,15 +332,15 @@ make docker   # Build and run the Docker container
 
 The transaction form is the most comprehensive in the application. It mirrors the full `SubmitTransactionRequest` model from the Sigma SDK and is organized into logical sections:
 
-**Transaction Details** *(required)* — Reference ID, amount, currency, date/time, channel (card payment, bank transfer, ATM, POS, etc.), type (debit or credit), completion status, and whether funds left the platform.
+**Transaction Details** *(required)* - Reference ID, amount, currency, date/time, channel (card payment, bank transfer, ATM, POS, etc.), type (debit or credit), completion status, and whether funds left the platform.
 
-**Anonymized User Context** *(required)* — A hashed/tokenized user identifier, ban status, KYC verification status. Critically, **Sigma does not require or want real PII** — it works with anonymized signals, which is why this section uses a `uniqueId` (your internal hashed identifier) rather than a name or account number.
+**Anonymized User Context** *(required)* - A hashed/tokenized user identifier, ban status, KYC verification status. Critically, **Sigma does not require or want real PII** - it works with anonymized signals, which is why this section uses a `uniqueId` (your internal hashed identifier) rather than a name or account number.
 
-**Optional Metadata** — Account flags (dormant, internal, staff, cheque), transaction context (sender/receiver account numbers, balance before, narration, session token), user profile (account type, age, city, country), device fingerprint (device ID, OS, manufacturer), GPS coordinates, third-party counterparty data, declared account limits, inline screening names, and beneficiary information.
+**Optional Metadata** - Account flags (dormant, internal, staff, cheque), transaction context (sender/receiver account numbers, balance before, narration, session token), user profile (account type, age, city, country), device fingerprint (device ID, OS, manufacturer), GPS coordinates, third-party counterparty data, declared account limits, inline screening names, and beneficiary information.
 
 **How results are displayed:**
 
-The result page shows a prominent action banner — green for *approved*, amber for *flagged*, red for *rejected* — with a plain-English explanation of what each outcome means and what action to take. Below the banner, a risk score scale (0–33 low, 34–66 medium, 67–100 high) puts the numeric score in context. The full submitted transaction data and the complete Sigma response (transaction ID, rule result, triggering rule name and ID, reason code and message, inline screening results) are displayed in organized field cards.
+The result page shows a prominent action banner - green for *approved*, amber for *flagged*, red for *rejected* - with a plain-English explanation of what each outcome means and what action to take. Below the banner, a risk score scale (0–33 low, 34–66 medium, 67–100 high) puts the numeric score in context. The full submitted transaction data and the complete Sigma response (transaction ID, rule result, triggering rule name and ID, reason code and message, inline screening results) are displayed in organized field cards.
 
 ---
 
@@ -348,21 +348,21 @@ The result page shows a prominent action banner — green for *approved*, amber 
 
 **Form page:** `/screening`
 
-The screening page screens a named individual against two distinct databases — PEP and Sanctions — using separate API calls. Two buttons trigger each check independently, sharing the same form inputs.
+The screening page screens a named individual against two distinct databases - PEP and Sanctions - using separate API calls. Two buttons trigger each check independently, sharing the same form inputs.
 
 Before reaching the form, the page presents information cards explaining:
 
-- **What is a PEP?** — An individual in a prominent public function (heads of state, senior politicians, central bank governors). PEPs carry elevated financial crime risk due to their position and potential exposure to bribery or corruption.
-- **What are Sanctions?** — Lists maintained by OFAC, UN, EU, UK HMT, and others, identifying parties prohibited from financial transactions. Transacting with a sanctioned entity is a serious regulatory violation.
+- **What is a PEP?** - An individual in a prominent public function (heads of state, senior politicians, central bank governors). PEPs carry elevated financial crime risk due to their position and potential exposure to bribery or corruption.
+- **What are Sanctions?** - Lists maintained by OFAC, UN, EU, UK HMT, and others, identifying parties prohibited from financial transactions. Transacting with a sanctioned entity is a serious regulatory violation.
 
 The **Match Threshold** field (0.0–1.0) controls the minimum confidence required for a match to be returned. A lower threshold returns more potential matches (higher recall, lower precision); a higher threshold returns fewer but more certain matches.
 
 **How results are displayed:**
 
-An amber banner appears when matches are found, explicitly stating what a match means ("this does not automatically mean the subject is the same person — review the confidence score and profile data"). Each matched entity is shown in a card with:
+An amber banner appears when matches are found, explicitly stating what a match means ("this does not automatically mean the subject is the same person - review the confidence score and profile data"). Each matched entity is shown in a card with:
 
-- **Search Score** — how closely the name string matched
-- **Confidence Score** — holistic match probability combining name, location, date of birth, and other corroborating signals
+- **Search Score** - how closely the name string matched
+- **Confidence Score** - holistic match probability combining name, location, date of birth, and other corroborating signals
 - Entity details: aliases, associated countries, known addresses, political positions (with dates held), political party affiliations, education, sanctions list memberships (in red badges), risk tags, and clickable source dataset links
 
 ---
@@ -373,7 +373,7 @@ An amber banner appears when matches are found, explicitly stating what a match 
 
 The adverse media page searches global news and media sources for negative coverage linked to a named subject.
 
-An important notice is displayed prominently before the form: **this endpoint operates asynchronously**. After submitting a request, Sigma queues a deep media search. In a production integration, results are pushed to a configured webhook URL once processing completes — which may take several minutes. The demo displays the initial submission acknowledgement and any data returned in the immediate response.
+An important notice is displayed prominently before the form: **this endpoint operates asynchronously**. After submitting a request, Sigma queues a deep media search. In a production integration, results are pushed to a configured webhook URL once processing completes - which may take several minutes. The demo displays the initial submission acknowledgement and any data returned in the immediate response.
 
 **How results are displayed:**
 
@@ -393,7 +393,7 @@ The `SigmaClient` interface means the application can be tested or demoed withou
 
 ### 3. Optional Fields as Pointer Types
 
-The Sigma transaction payload has many optional fields. Rather than sending empty strings or zero values that the API would have to ignore, the service layer maps each optional form input through helper functions (`ptrStr`, `ptrFloat`, `ptrBoolForm`, `ptrTime`) that return `nil` when the value is empty — so the JSON encoder's `omitempty` tag omits them entirely from the payload. This is the correct way to interact with an optional-field API.
+The Sigma transaction payload has many optional fields. Rather than sending empty strings or zero values that the API would have to ignore, the service layer maps each optional form input through helper functions (`ptrStr`, `ptrFloat`, `ptrBoolForm`, `ptrTime`) that return `nil` when the value is empty - so the JSON encoder's `omitempty` tag omits them entirely from the payload. This is the correct way to interact with an optional-field API.
 
 ### 4. Information Architecture on Result Pages
 
@@ -422,8 +422,8 @@ The application ships in mock mode by default (`USE_MOCK=true`). This behaviour 
 | `USE_MOCK=true`  | No Sigma API calls are made. All responses are generated by the `MockClient` with realistic randomised data. Useful for demoing the UI without network dependency. |
 | `USE_MOCK=false` | All API calls are made to the live Sigma endpoints using the configured credentials. Requires `SIGMA_API_KEY` and `SIGMA_API_SECRET` to be set.                    |
 
-The mock/live switch happens entirely inside the DI container (`internal/di/container.go`). No handler or service code branches on this setting — they all receive a `SigmaClient` and never know which concrete implementation they're using.
+The mock/live switch happens entirely inside the DI container (`internal/di/container.go`). No handler or service code branches on this setting - they all receive a `SigmaClient` and never know which concrete implementation they're using.
 
 ---
 
-*Built by George Uche-Umeh — Pastel FDE Assessment, March 2026*
+*Built by George Uche-Umeh - Pastel FDE Assessment, March 2026*

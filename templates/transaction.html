@@ -41,10 +41,10 @@
                 <div>
                     <label class="field-label">Currency <span class="text-red-400">*</span></label>
                     <select name="currency" class="field-input">
-                        <option value="NGN" selected>NGN — Nigerian Naira</option>
-                        <option value="USD">USD — US Dollar</option>
-                        <option value="GBP">GBP — British Pound</option>
-                        <option value="EUR">EUR — Euro</option>
+                        <option value="NGN" selected>NGN - Nigerian Naira</option>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="EUR">EUR - Euro</option>
                     </select>
                 </div>
                 <div>
@@ -90,8 +90,8 @@
                 <div>
                     <label class="field-label">External Payment? <span class="text-red-400">*</span></label>
                     <select name="is_external_payment" class="field-input">
-                        <option value="true">Yes — Funds left your platform</option>
-                        <option value="false" selected>No — Internal transfer</option>
+                        <option value="true">Yes - Funds left your platform</option>
+                        <option value="false" selected>No - Internal transfer</option>
                     </select>
                     <span class="field-hint">Whether funds moved outside your platform.</span>
                 </div>
@@ -105,7 +105,7 @@
                 <h3 class="text-sm font-semibold text-slate-200">Anonymized User Context</h3>
                 <span class="ml-auto text-[10px] text-red-400 font-medium uppercase tracking-wide">Required</span>
             </div>
-            <p class="text-xs text-slate-500 mb-5 ml-6">Hashed/tokenized identifiers for the initiating user. No PII required — Sigma only needs anonymized signals.</p>
+            <p class="text-xs text-slate-500 mb-5 ml-6">Hashed/tokenized identifiers for the initiating user. No PII required. Sigma only needs anonymized signals.</p>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
@@ -116,16 +116,16 @@
                 <div>
                     <label class="field-label">Account Banned? <span class="text-red-400">*</span></label>
                     <select name="is_banned" class="field-input">
-                        <option value="true">Yes — Flagged account</option>
-                        <option value="false" selected>No — Active account</option>
+                        <option value="true">Yes - Flagged account</option>
+                        <option value="false" selected>No - Active account</option>
                     </select>
                     <span class="field-hint">Whether this user is restricted on your platform.</span>
                 </div>
                 <div>
                     <label class="field-label">Identity Verified? <span class="text-red-400">*</span></label>
                     <select name="is_identity_verified" class="field-input">
-                        <option value="true" selected>Yes — KYC passed</option>
-                        <option value="false">No — Unverified</option>
+                        <option value="true" selected>Yes - KYC passed</option>
+                        <option value="false">No - Unverified</option>
                     </select>
                     <span class="field-hint">Whether the user has completed KYC verification.</span>
                 </div>

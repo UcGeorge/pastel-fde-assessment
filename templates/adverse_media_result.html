@@ -104,7 +104,7 @@
             <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
                 <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-2">Adverse Findings?</p>
                 <p class="text-base font-bold {{if .Response.Data.FindingsReturned}}text-rose-400{{else}}text-emerald-400{{end}}">
-                    {{if .Response.Data.FindingsReturned}}Yes — Findings Present{{else}}No — Clear{{end}}
+                    {{if .Response.Data.FindingsReturned}}Yes - Findings Present{{else}}No - Clear{{end}}
                 </p>
                 <p class="text-[10px] text-slate-600 mt-2 leading-relaxed">
                     {{if .Response.Data.FindingsReturned}}
@@ -127,11 +127,11 @@
                 </p>
                 <p class="text-[10px] text-slate-600 mt-2 leading-relaxed">
                     {{if eq (print .Response.Data.RiskCategory) "High"}}
-                        Serious adverse coverage detected — criminal allegations, regulatory action, or financial misconduct.
+                        Serious adverse coverage detected - criminal allegations, regulatory action, or financial misconduct.
                     {{else if eq (print .Response.Data.RiskCategory) "Medium"}}
-                        Moderate adverse coverage — may warrant enhanced due diligence procedures.
+                        Moderate adverse coverage - may warrant enhanced due diligence procedures.
                     {{else}}
-                        Minor adverse coverage — low-impact media coverage; standard onboarding may proceed.
+                        Minor adverse coverage - low-impact media coverage; standard onboarding may proceed.
                     {{end}}
                 </p>
             </div>
