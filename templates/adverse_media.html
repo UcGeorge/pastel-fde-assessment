@@ -1,45 +1,71 @@
 {{define "adverse_media"}}
 <div class="animate-fade-in">
-    <div class="mb-8">
-        <div class="flex items-center gap-3 mb-2">
-            <div class="w-8 h-8 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-center">
-                <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/></svg>
+
+    <!-- Page Header -->
+    <div class="mb-7">
+        <div class="flex items-center gap-2.5 mb-3">
+            <div class="w-8 h-8 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/></svg>
             </div>
             <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Adverse Media Screening</h2>
         </div>
-        <p class="text-sm sm:text-base text-gray-400">Search news and media sources for negative coverage linked to an individual or entity.</p>
+        <p class="text-sm text-slate-400 leading-relaxed max-w-2xl">
+            Search global news and media sources for negative coverage linked to an individual or entity. Returns findings categorised by severity, with source links — covering fraud allegations, criminal investigations, money laundering, and financial misconduct.
+        </p>
     </div>
 
-    <form hx-post="/adverse-media/check" hx-target="#adverse-media-result" hx-indicator="#adverse-media-loading" class="space-y-6">
-        <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
-            <h3 class="text-sm font-semibold text-gray-300 mb-4 flex items-center gap-2">
-                <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
-                Search Parameters
-            </h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="md:col-span-2">
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Individual or Entity Name <span class="text-red-500">*</span></label>
-                    <input type="text" name="query" value="Vladimir Putin" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600" placeholder="Enter name to search..." required>
+    <!-- How it works -->
+    <div class="bg-rose-500/5 border border-rose-500/15 rounded-xl p-4 mb-5">
+        <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-rose-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
+            <div>
+                <p class="text-xs font-semibold text-rose-300 mb-1">Asynchronous Processing</p>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Adverse media checks are processed <strong class="text-slate-400">asynchronously</strong>. After submitting a request, Sigma queues a deep media search across global news sources. In a production integration, results are delivered to a configured <strong class="text-slate-400">webhook URL</strong> once processing is complete — which may take a few minutes. This demo displays the initial submission acknowledgement and any available response data.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <form hx-post="/adverse-media/check" hx-target="#adverse-media-result" hx-indicator="#adverse-media-loading" class="space-y-5">
+        <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-5 sm:p-6">
+            <div class="flex items-center gap-2 mb-1">
+                <svg class="w-4 h-4 text-rose-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+                <h3 class="text-sm font-semibold text-slate-200">Search Parameters</h3>
+            </div>
+            <p class="text-xs text-slate-500 mb-5 ml-6">Provide the name of the individual or entity to search. Sigma will cross-reference this against indexed global media.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="sm:col-span-2">
+                    <label class="field-label">Subject Name <span class="text-red-400">*</span></label>
+                    <input type="text" name="query" value="Vladimir Putin"
+                           class="field-input" placeholder="Enter individual or entity name..." required>
+                    <span class="field-hint">Use the full legal name or commonly known name of the subject. Partial names may reduce accuracy.</span>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Result Limit <span class="text-red-500">*</span></label>
-                    <input type="number" name="limit" value="10" min="1" max="100" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600">
+                    <label class="field-label">Result Limit <span class="text-red-400">*</span></label>
+                    <input type="number" name="limit" value="10" min="1" max="100" class="field-input">
+                    <span class="field-hint">Max number of adverse media articles to return (1–100). Higher values provide more coverage but take longer.</span>
                 </div>
             </div>
         </div>
 
-        <button type="submit" class="htmx-hide-on-request w-full bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-400 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg shadow-rose-500/20 hover:shadow-rose-500/30 active:scale-[0.98]">
-            Search Adverse Media
-        </button>
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+            <button type="submit"
+                    class="htmx-hide-on-request flex-1 bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-400 text-white font-semibold py-3.5 px-6 rounded-xl transition-all duration-200 shadow-lg shadow-rose-500/20 hover:shadow-rose-500/30 active:scale-[0.98] flex items-center justify-center gap-2.5">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/></svg>
+                Search Adverse Media
+            </button>
+        </div>
 
-        <div id="adverse-media-loading" class="htmx-indicator justify-center py-3">
-            <div class="flex items-center gap-3 text-gray-400">
+        <div id="adverse-media-loading" class="htmx-indicator justify-center py-4">
+            <div class="flex items-center gap-3 text-slate-400">
                 <svg class="animate-spin w-5 h-5 text-rose-400" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
-                <span class="text-sm font-medium">Searching media sources for adverse coverage...</span>
+                <span class="text-sm font-medium">Queuing adverse media search across global sources...</span>
             </div>
         </div>
     </form>
 
-    <div id="adverse-media-result" class="mt-6"></div>
+    <div id="adverse-media-result" class="mt-5"></div>
 </div>
 {{end}}

@@ -1,125 +1,212 @@
 {{define "adverse_media_result"}}
-<div class="animate-fade-in space-y-6">
+<div class="animate-fade-in space-y-5">
+
     {{if .Error}}
-    <div class="bg-red-500/10 border border-red-500/30 rounded-2xl p-6">
-        <div class="flex items-center gap-3">
-            <svg class="w-6 h-6 text-red-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+    <div class="bg-red-500/10 border border-red-500/30 rounded-2xl p-5">
+        <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
             <div>
-                <h3 class="text-sm font-semibold text-red-300">API Error</h3>
-                <p class="text-sm text-red-400 mt-1">{{.Error}}</p>
+                <h3 class="text-sm font-semibold text-red-300 mb-1">API Error</h3>
+                <p class="text-sm text-red-400">{{.Error}}</p>
             </div>
         </div>
     </div>
     {{else}}
 
-    <!-- Summary Banner -->
-    <div class="rounded-2xl p-6 bg-rose-500/10 border border-rose-500/30">
-        <div class="flex items-center gap-4">
-            <div class="w-14 h-14 rounded-2xl bg-rose-500/20 flex items-center justify-center">
-                <svg class="w-8 h-8 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/></svg>
+    <!-- REQUEST STATUS BANNER -->
+    {{if .Response.Data}}
+    <div class="rounded-2xl p-5 sm:p-6
+        {{if .Response.Data.FindingsReturned}}bg-rose-500/10 border border-rose-500/30
+        {{else}}bg-emerald-500/10 border border-emerald-500/30{{end}}">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div class="flex items-center gap-4 flex-1 min-w-0">
+                {{if .Response.Data.FindingsReturned}}
+                <div class="w-14 h-14 rounded-2xl bg-rose-500/20 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-7 h-7 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+                </div>
+                {{else}}
+                <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-7 h-7 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                {{end}}
+                <div class="min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-widest mb-0.5
+                        {{if .Response.Data.FindingsReturned}}text-rose-400{{else}}text-emerald-400{{end}}">
+                        Adverse Media Result
+                    </p>
+                    <p class="text-2xl font-bold {{if .Response.Data.FindingsReturned}}text-rose-300{{else}}text-emerald-300{{end}}">
+                        {{if .Response.Data.FindingsReturned}}Adverse Findings Detected{{else}}No Adverse Findings{{end}}
+                    </p>
+                    <p class="text-xs text-slate-400 mt-1">{{.Response.Message}}</p>
+                </div>
             </div>
-            <div>
-                <p class="text-xs font-medium text-rose-400 uppercase tracking-wider">Adverse Media Check</p>
-                <p class="text-2xl font-bold text-rose-300">Request Submitted</p>
-                <p class="text-sm text-gray-400 mt-1">{{.Response.Message}}</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Submitted Info -->
-    <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
-        <h3 class="text-sm font-semibold text-gray-300 mb-4">Information Submitted</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-                <p class="text-xs text-gray-500 mb-1">Query</p>
-                <p class="text-sm font-medium text-gray-200 break-words">{{.Input.Query}}</p>
-            </div>
-            <div>
-                <p class="text-xs text-gray-500 mb-1">Limit</p>
-                <p class="text-sm font-medium text-gray-200">{{.Input.Limit}}</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Summary of Findings -->
-    {{if .Response.Data.FindingsReturned}}
-    <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
-        <h3 class="text-sm font-semibold text-gray-300 mb-4">Summary of Findings</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
-                <p class="text-xs text-gray-500 mb-1">Adverse Media Findings Returned?</p>
-                <p class="text-sm font-medium {{if .Response.Data.FindingsReturned}}text-rose-400{{else}}text-emerald-400{{end}}">
-                    {{if .Response.Data.FindingsReturned}}Yes{{else}}No{{end}}
-                </p>
-            </div>
-            {{if .Response.Data.RiskCategory}}
-            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
-                <p class="text-xs text-gray-500 mb-1">Category of Risk</p>
-                <p class="text-sm font-medium {{if eq (print .Response.Data.RiskCategory) "High"}}text-rose-400{{else if eq (print .Response.Data.RiskCategory) "Medium"}}text-amber-400{{else}}text-green-400{{end}}">
-                    {{.Response.Data.RiskCategory}}
-                </p>
-            </div>
-            {{end}}
-            {{if .Response.Data.Sources}}
-            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
-                <p class="text-xs text-gray-500 mb-1">Sources</p>
-                <div class="flex flex-wrap gap-1.5 mt-1">
-                    {{range .Response.Data.Sources}}
-                    <span class="px-2 py-0.5 rounded-lg bg-surface-800/60 border border-surface-700/60 text-xs text-gray-300">{{.}}</span>
-                    {{end}}
+            {{if and .Response.Data .Response.Data.RiskCategory}}
+            <div class="sm:flex-shrink-0">
+                <div class="px-4 py-3 rounded-xl
+                    {{if eq (print .Response.Data.RiskCategory) "High"}}bg-red-500/15 border border-red-500/30
+                    {{else if eq (print .Response.Data.RiskCategory) "Medium"}}bg-amber-500/15 border border-amber-500/30
+                    {{else}}bg-emerald-500/15 border border-emerald-500/30{{end}} text-center">
+                    <p class="text-[10px] uppercase tracking-wide font-semibold
+                        {{if eq (print .Response.Data.RiskCategory) "High"}}text-red-400
+                        {{else if eq (print .Response.Data.RiskCategory) "Medium"}}text-amber-400
+                        {{else}}text-emerald-400{{end}} mb-0.5">Risk Category</p>
+                    <p class="text-lg font-bold
+                        {{if eq (print .Response.Data.RiskCategory) "High"}}text-red-300
+                        {{else if eq (print .Response.Data.RiskCategory) "Medium"}}text-amber-300
+                        {{else}}text-emerald-300{{end}}">{{.Response.Data.RiskCategory}}</p>
                 </div>
             </div>
             {{end}}
         </div>
     </div>
+    {{else}}
+    <!-- Submitted but no data yet -->
+    <div class="rounded-2xl p-5 sm:p-6 bg-brand-500/10 border border-brand-500/30">
+        <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-2xl bg-brand-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-7 h-7 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div>
+                <p class="text-[10px] font-semibold uppercase tracking-widest text-brand-400 mb-0.5">Adverse Media Check</p>
+                <p class="text-2xl font-bold text-brand-300">Request Queued</p>
+                <p class="text-xs text-slate-400 mt-1">{{.Response.Message}}</p>
+            </div>
+        </div>
+    </div>
     {{end}}
 
-    <!-- Full Response -->
-    {{if .Response.Data}}
-    <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
-        <h3 class="text-sm font-semibold text-gray-300 mb-4">Full Sigma Response</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
-                <p class="text-xs text-gray-500 mb-1">Request ID</p>
-                <p class="text-sm font-medium text-gray-200 font-mono break-all">{{.Response.Data.ID}}</p>
+    <!-- INFORMATION SUBMITTED -->
+    <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-5 sm:p-6">
+        <h3 class="text-sm font-semibold text-slate-200 mb-4">Information Submitted to Sigma</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Subject Query</p>
+                <p class="text-sm font-semibold text-slate-200 break-words">{{.Input.Query}}</p>
+                <p class="text-[10px] text-slate-600 mt-1">The name searched across global media sources.</p>
             </div>
-            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
-                <p class="text-xs text-gray-500 mb-1">Status</p>
-                <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold
-                    {{if eq .Response.Data.Status "pending"}}bg-amber-500/20 text-amber-400 border border-amber-500/30
-                    {{else if eq .Response.Data.Status "completed"}}bg-emerald-500/20 text-emerald-400 border border-emerald-500/30
-                    {{else}}bg-gray-500/20 text-gray-400 border border-gray-500/30{{end}}">
-                    {{.Response.Data.Status}}
-                </span>
-            </div>
-            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
-                <p class="text-xs text-gray-500 mb-1">Query</p>
-                <p class="text-sm font-medium text-gray-200">{{.Response.Data.Query}}</p>
-            </div>
-            {{if .Response.Data.BusinessProfile}}
-            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
-                <p class="text-xs text-gray-500 mb-1">Business Profile</p>
-                <p class="text-sm font-medium text-gray-200 font-mono break-all">{{.Response.Data.BusinessProfile}}</p>
-            </div>
-            {{end}}
-            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
-                <p class="text-xs text-gray-500 mb-1">Created At</p>
-                <p class="text-sm font-medium text-gray-200">{{.Response.Data.CreatedAt}}</p>
-            </div>
-            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
-                <p class="text-xs text-gray-500 mb-1">Updated At</p>
-                <p class="text-sm font-medium text-gray-200">{{.Response.Data.UpdatedAt}}</p>
+            <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Result Limit</p>
+                <p class="text-sm font-semibold text-slate-200">{{.Input.Limit}} articles</p>
+                <p class="text-[10px] text-slate-600 mt-1">Maximum number of adverse media articles requested.</p>
             </div>
         </div>
     </div>
 
-    <!-- Webhook Notice -->
-    <div class="bg-brand-500/10 border border-brand-500/30 rounded-2xl p-5">
+    {{if .Response.Data}}
+
+    <!-- FINDINGS SUMMARY -->
+    <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-5 sm:p-6">
+        <h3 class="text-sm font-semibold text-slate-200 mb-1">Summary of Findings</h3>
+        <p class="text-xs text-slate-500 mb-5">An overview of the adverse media check results as reported by Sigma.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <!-- Findings Returned -->
+            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-2">Adverse Findings?</p>
+                <p class="text-base font-bold {{if .Response.Data.FindingsReturned}}text-rose-400{{else}}text-emerald-400{{end}}">
+                    {{if .Response.Data.FindingsReturned}}Yes — Findings Present{{else}}No — Clear{{end}}
+                </p>
+                <p class="text-[10px] text-slate-600 mt-2 leading-relaxed">
+                    {{if .Response.Data.FindingsReturned}}
+                        Adverse media articles were identified for this subject. Review findings and risk category before proceeding.
+                    {{else}}
+                        No adverse coverage found at or above the detection threshold. Subject appears clear in media sources.
+                    {{end}}
+                </p>
+            </div>
+
+            <!-- Risk Category -->
+            {{if .Response.Data.RiskCategory}}
+            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-2">Risk Category</p>
+                <p class="text-base font-bold
+                    {{if eq (print .Response.Data.RiskCategory) "High"}}text-rose-400
+                    {{else if eq (print .Response.Data.RiskCategory) "Medium"}}text-amber-400
+                    {{else}}text-emerald-400{{end}}">
+                    {{.Response.Data.RiskCategory}}
+                </p>
+                <p class="text-[10px] text-slate-600 mt-2 leading-relaxed">
+                    {{if eq (print .Response.Data.RiskCategory) "High"}}
+                        Serious adverse coverage detected — criminal allegations, regulatory action, or financial misconduct.
+                    {{else if eq (print .Response.Data.RiskCategory) "Medium"}}
+                        Moderate adverse coverage — may warrant enhanced due diligence procedures.
+                    {{else}}
+                        Minor adverse coverage — low-impact media coverage; standard onboarding may proceed.
+                    {{end}}
+                </p>
+            </div>
+            {{end}}
+
+            <!-- Sources -->
+            {{if .Response.Data.Sources}}
+            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-2">Media Sources</p>
+                <div class="flex flex-wrap gap-1.5">
+                    {{range .Response.Data.Sources}}
+                    <span class="px-2 py-1 rounded-lg bg-surface-800/60 border border-surface-700/60 text-xs text-slate-300">{{.}}</span>
+                    {{end}}
+                </div>
+                <p class="text-[10px] text-slate-600 mt-2">Publications / databases where adverse content was found.</p>
+            </div>
+            {{end}}
+        </div>
+    </div>
+
+    <!-- FULL API RESPONSE -->
+    <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-5 sm:p-6">
+        <h3 class="text-sm font-semibold text-slate-200 mb-1">Full Sigma API Response</h3>
+        <p class="text-xs text-slate-500 mb-5">Raw structured fields returned by the Sigma adverse media endpoint.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40 sm:col-span-2">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1.5">Request ID</p>
+                <p class="text-sm font-medium text-slate-200 font-mono break-all">{{.Response.Data.ID}}</p>
+                <p class="text-[10px] text-slate-600 mt-1">Sigma's internal reference for this adverse media job. Quote this ID when following up via webhook or support.</p>
+            </div>
+            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1.5">Processing Status</p>
+                <span class="inline-flex px-3 py-1 rounded-full text-xs font-bold
+                    {{if eq .Response.Data.Status "pending"}}bg-amber-500/20 text-amber-300 border border-amber-500/30
+                    {{else if eq .Response.Data.Status "completed"}}bg-emerald-500/20 text-emerald-300 border border-emerald-500/30
+                    {{else}}bg-slate-500/20 text-slate-300 border border-slate-500/30{{end}}">
+                    {{.Response.Data.Status}}
+                </span>
+                <p class="text-[10px] text-slate-600 mt-2 leading-relaxed">
+                    {{if eq .Response.Data.Status "pending"}}Media search is queued. Results will be pushed to your webhook endpoint when complete.
+                    {{else if eq .Response.Data.Status "completed"}}Processing complete. All findings are reflected above.
+                    {{else}}Check your webhook endpoint for final results.{{end}}
+                </p>
+            </div>
+            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1.5">Query Sent</p>
+                <p class="text-sm font-medium text-slate-200">{{.Response.Data.Query}}</p>
+            </div>
+            {{if .Response.Data.BusinessProfile}}
+            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40 sm:col-span-2">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1.5">Business Profile</p>
+                <p class="text-sm font-medium text-slate-200">{{.Response.Data.BusinessProfile}}</p>
+            </div>
+            {{end}}
+            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1.5">Submitted At</p>
+                <p class="text-sm font-medium text-slate-200">{{.Response.Data.CreatedAt}}</p>
+            </div>
+            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1.5">Last Updated</p>
+                <p class="text-sm font-medium text-slate-200">{{.Response.Data.UpdatedAt}}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ASYNC NOTICE -->
+    <div class="bg-brand-500/10 border border-brand-500/30 rounded-2xl p-4 sm:p-5">
         <div class="flex items-start gap-3">
             <svg class="w-5 h-5 text-brand-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
             <div>
-                <p class="text-sm font-medium text-brand-300">Webhook-Based Endpoint</p>
-                <p class="text-xs text-gray-400 mt-1">This endpoint operates asynchronously. The full adverse media results would be delivered to a configured webhook URL once processing is complete. The current status is <strong class="text-gray-300">{{.Response.Data.Status}}</strong>.</p>
+                <p class="text-sm font-semibold text-brand-300 mb-1">About Asynchronous Delivery</p>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    The Sigma Adverse Media endpoint operates <strong class="text-slate-300">asynchronously</strong>. After submission, Sigma queues a comprehensive scan across indexed global media. In a production integration, the full report (including article excerpts, categories, and source links) is delivered to your configured <strong class="text-slate-300">webhook URL</strong> once processing is complete. The current job status is <strong class="text-slate-300">{{.Response.Data.Status}}</strong>.
+                </p>
             </div>
         </div>
     </div>

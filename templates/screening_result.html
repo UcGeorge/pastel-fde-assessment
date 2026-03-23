@@ -1,198 +1,256 @@
 {{define "screening_result"}}
-<div class="animate-fade-in space-y-6">
+<div class="animate-fade-in space-y-5">
+
     {{if .Error}}
-    <div class="bg-red-500/10 border border-red-500/30 rounded-2xl p-6">
-        <div class="flex items-center gap-3">
-            <svg class="w-6 h-6 text-red-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+    <div class="bg-red-500/10 border border-red-500/30 rounded-2xl p-5">
+        <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
             <div>
-                <h3 class="text-sm font-semibold text-red-300">API Error</h3>
-                <p class="text-sm text-red-400 mt-1">{{.Error}}</p>
+                <h3 class="text-sm font-semibold text-red-300 mb-1">API Error</h3>
+                <p class="text-sm text-red-400">{{.Error}}</p>
             </div>
         </div>
     </div>
     {{else}}
 
-    <!-- Summary Banner -->
-    <div class="rounded-2xl p-6 {{if .Response.Data}}bg-amber-500/10 border border-amber-500/30{{else}}bg-emerald-500/10 border border-emerald-500/30{{end}}">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center gap-4">
+    <!-- SUMMARY BANNER -->
+    <div class="rounded-2xl p-5 sm:p-6
+        {{if .Response.Data}}bg-amber-500/10 border border-amber-500/30
+        {{else}}bg-emerald-500/10 border border-emerald-500/30{{end}}">
+
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div class="flex items-center gap-4 flex-1 min-w-0">
                 {{if .Response.Data}}
-                <div class="w-14 h-14 rounded-2xl bg-amber-500/20 flex items-center justify-center">
-                    <svg class="w-8 h-8 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+                <div class="w-14 h-14 rounded-2xl bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-7 h-7 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
                 </div>
                 {{else}}
-                <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center">
-                    <svg class="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-7 h-7 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
                 {{end}}
-                <div>
-                    <p class="text-xs font-medium {{if .Response.Data}}text-amber-400{{else}}text-emerald-400{{end}} uppercase tracking-wider">{{.Type}} Screening Result</p>
+                <div class="min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-widest mb-0.5 {{if .Response.Data}}text-amber-400{{else}}text-emerald-400{{end}}">
+                        {{.Type}} Screening Result
+                    </p>
                     <p class="text-2xl font-bold {{if .Response.Data}}text-amber-300{{else}}text-emerald-300{{end}}">
                         {{if .Response.Data}}{{.Response.Count}} Match{{if gt .Response.Count 1}}es{{end}} Found{{else}}No Matches Found{{end}}
                     </p>
-                    <p class="text-sm text-gray-400 mt-1">{{.Response.Message}}</p>
+                    <p class="text-xs text-slate-400 mt-1">{{.Response.Message}}</p>
                 </div>
             </div>
+            {{if .Response.Data}}
+            <div class="sm:flex-shrink-0">
+                <span class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500/20 border border-amber-500/30 text-sm font-bold text-amber-300">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+                    Review Required
+                </span>
+            </div>
+            {{end}}
+        </div>
+
+        <div class="mt-4 pt-4 border-t {{if .Response.Data}}border-amber-500/20{{else}}border-emerald-500/20{{end}}">
+            <p class="text-xs text-slate-400 leading-relaxed">
+                {{if .Response.Data}}
+                    <strong class="text-slate-300">What this means:</strong> One or more individuals in the {{.Type}} database match the submitted name with sufficient confidence. This does not automatically mean the subject is the same person — review the confidence score and profile data to make a determination.
+                {{else}}
+                    <strong class="text-slate-300">What this means:</strong> No records in the {{.Type}} database matched the submitted name at or above the specified confidence threshold ({{.Input.Threshold}}). The subject is not on this watchlist based on the information provided.
+                {{end}}
+            </p>
         </div>
     </div>
 
-    <!-- Submitted Info -->
-    <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
-        <h3 class="text-sm font-semibold text-gray-300 mb-4">Information Submitted</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
-            <div>
-                <p class="text-xs text-gray-500 mb-1">Name</p>
-                <p class="text-sm font-medium text-gray-200">{{.Input.Name}}</p>
+    <!-- INFORMATION SUBMITTED -->
+    <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-5 sm:p-6">
+        <h3 class="text-sm font-semibold text-slate-200 mb-4">Information Submitted to Sigma</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Name Screened</p>
+                <p class="text-sm font-semibold text-slate-200">{{.Input.Name}}</p>
             </div>
-            <div>
-                <p class="text-xs text-gray-500 mb-1">Threshold</p>
-                <p class="text-sm font-medium text-gray-200">{{.Input.Threshold}}</p>
+            <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Match Threshold</p>
+                <p class="text-sm font-semibold text-slate-200">{{.Input.Threshold}}</p>
+                <p class="text-[10px] text-slate-600 mt-1">Minimum confidence score required (0.0 = any match, 1.0 = exact only).</p>
             </div>
-            <div>
-                <p class="text-xs text-gray-500 mb-1">Country</p>
-                <p class="text-sm font-medium text-gray-200">{{if .Input.Country}}{{.Input.Country}}{{else}}—{{end}}</p>
+            <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Country Filter</p>
+                <p class="text-sm font-semibold text-slate-200">{{if .Input.Country}}{{.Input.Country}}{{else}}<span class="text-slate-600">None (global search)</span>{{end}}</p>
             </div>
         </div>
     </div>
 
-    <!-- Matched Entities -->
+    <!-- MATCHED ENTITIES -->
     {{if .Response.Data}}
     <div class="space-y-4">
-        <h3 class="text-sm font-semibold text-gray-300">Matched Entities</h3>
+        <div class="flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-slate-200">Matched Entities</h3>
+            <span class="text-xs text-slate-500">{{.Response.Count}} result{{if gt .Response.Count 1}}s{{end}} returned</span>
+        </div>
+
         {{range .Response.Data}}
-        <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
-            <div class="flex items-start justify-between mb-4">
-                <div>
-                    <h4 class="text-lg font-semibold text-white">{{.Name}}</h4>
-                    <p class="text-xs text-gray-400 mt-0.5 break-all">{{.EntityType}} · ID: {{.ID}}</p>
+        <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-5 sm:p-6">
+
+            <!-- Entity Header -->
+            <div class="flex flex-col sm:flex-row sm:items-start gap-4 mb-5">
+                <div class="flex-1 min-w-0">
+                    <h4 class="text-lg font-bold text-white mb-0.5">{{.Name}}</h4>
+                    <p class="text-xs text-slate-500">
+                        <span class="capitalize">{{.EntityType}}</span>
+                        {{if .ID}} · <span class="font-mono">ID: {{.ID}}</span>{{end}}
+                    </p>
                 </div>
-                <div class="flex gap-2">
-                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/30">
-                        Search Score: {{printf "%.2f" .SearchScore}}
-                    </span>
-                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/30">
-                        Confidence: {{printf "%.2f" .ConfidenceScore}}
-                    </span>
+                <div class="flex flex-wrap gap-2 sm:flex-shrink-0">
+                    <div class="px-3 py-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-center min-w-[90px]">
+                        <p class="text-[10px] text-blue-400 uppercase tracking-wide mb-0.5">Search Score</p>
+                        <p class="text-sm font-bold text-blue-300">{{printf "%.2f" .SearchScore}}</p>
+                        <p class="text-[9px] text-slate-600">Name similarity</p>
+                    </div>
+                    <div class="px-3 py-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center min-w-[90px]">
+                        <p class="text-[10px] text-amber-400 uppercase tracking-wide mb-0.5">Confidence</p>
+                        <p class="text-sm font-bold text-amber-300">{{printf "%.2f" .ConfidenceScore}}</p>
+                        <p class="text-[9px] text-slate-600">Overall match</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+            <!-- Confidence explanation -->
+            <div class="mb-4 p-3 rounded-lg bg-surface-950/40 border border-surface-800/30">
+                <p class="text-[10px] text-slate-500 leading-relaxed">
+                    <span class="font-semibold text-slate-400">About these scores:</span>
+                    The <strong class="text-slate-300">Search Score</strong> reflects how closely the name string matches. The <strong class="text-slate-300">Confidence Score</strong> is a holistic match probability combining name, location, date-of-birth, and other corroborating data. A score above your threshold ({{$.Input.Threshold}}) indicates a meaningful match.
+                </p>
+            </div>
+
+            <!-- Entity Details -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-4">
                 {{if .Gender}}
-                <div>
-                    <p class="text-xs text-gray-500 mb-1">Gender</p>
-                    <p class="text-gray-200 capitalize">{{.Gender}}</p>
+                <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
+                    <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Gender</p>
+                    <p class="text-sm text-slate-200 capitalize">{{.Gender}}</p>
                 </div>
                 {{end}}
                 {{if .BirthDate}}
-                <div>
-                    <p class="text-xs text-gray-500 mb-1">Birth Date</p>
-                    <p class="text-gray-200">{{.BirthDate}}</p>
+                <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
+                    <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Date of Birth</p>
+                    <p class="text-sm text-slate-200">{{.BirthDate}}</p>
                 </div>
                 {{end}}
                 {{if .Countries}}
-                <div>
-                    <p class="text-xs text-gray-500 mb-1">Countries</p>
-                    <p class="text-gray-200">{{range $i, $c := .Countries}}{{if $i}}, {{end}}{{$c}}{{end}}</p>
-                </div>
-                {{end}}
-                {{if .Addresses}}
-                <div class="col-span-full">
-                    <p class="text-xs text-gray-500 mb-1">Addresses</p>
-                    <p class="text-gray-200">{{range $i, $a := .Addresses}}{{if $i}}; {{end}}{{$a}}{{end}}</p>
+                <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
+                    <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Associated Countries</p>
+                    <p class="text-sm text-slate-200">{{range $i, $c := .Countries}}{{if $i}}, {{end}}{{$c}}{{end}}</p>
                 </div>
                 {{end}}
                 {{if .ExternalID}}
-                <div>
-                    <p class="text-xs text-gray-500 mb-1">External ID</p>
-                    <p class="text-gray-200 font-mono text-xs break-all">{{.ExternalID}}</p>
+                <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40">
+                    <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">External ID</p>
+                    <p class="text-xs text-slate-200 font-mono break-all">{{.ExternalID}}</p>
+                </div>
+                {{end}}
+                {{if .Addresses}}
+                <div class="bg-surface-950/50 rounded-xl p-3 border border-surface-800/40 sm:col-span-2">
+                    <p class="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Known Addresses</p>
+                    <p class="text-sm text-slate-200 leading-relaxed">{{range $i, $a := .Addresses}}{{if $i}} · {{end}}{{$a}}{{end}}</p>
                 </div>
                 {{end}}
             </div>
 
-            {{if .Aliases}}
-            <div class="mt-3">
-                <p class="text-xs text-gray-500 mb-1.5">Aliases</p>
-                <div class="flex flex-wrap gap-1.5">
-                    {{range .Aliases}}
-                    <span class="px-2 py-0.5 rounded-lg bg-surface-950/60 border border-surface-800/40 text-xs text-gray-300">{{.}}</span>
-                    {{end}}
-                </div>
-            </div>
-            {{end}}
-
-            {{if .Positions}}
-            <div class="mt-3">
-                <p class="text-xs text-gray-500 mb-1.5">Positions</p>
-                <div class="space-y-1">
-                    {{range .Positions}}
-                    <div class="text-xs text-gray-300 bg-surface-950/60 border border-surface-800/40 rounded-lg px-3 py-2">
-                        <span class="font-medium">{{.Title}}</span>
-                        {{if .StartDate}}<span class="text-gray-500 ml-1">from {{.StartDate}}</span>{{end}}
-                        {{if .EndDate}}<span class="text-gray-500"> to {{.EndDate}}</span>{{end}}
+            <!-- Badge groups -->
+            <div class="space-y-3">
+                {{if .Aliases}}
+                <div>
+                    <p class="text-[10px] text-slate-600 uppercase tracking-wide mb-2 font-semibold">Known Aliases / Alternative Names</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        {{range .Aliases}}
+                        <span class="px-2.5 py-1 rounded-lg bg-surface-950/60 border border-surface-800/40 text-xs text-slate-300">{{.}}</span>
+                        {{end}}
                     </div>
-                    {{end}}
                 </div>
-            </div>
-            {{end}}
+                {{end}}
 
-            {{if .Sanctions}}
-            <div class="mt-3">
-                <p class="text-xs text-gray-500 mb-1.5">Sanctions</p>
-                <div class="flex flex-wrap gap-1.5">
-                    {{range .Sanctions}}
-                    <span class="px-2 py-0.5 rounded-lg bg-red-500/10 border border-red-500/20 text-xs text-red-400">{{.}}</span>
-                    {{end}}
-                </div>
-            </div>
-            {{end}}
-
-            {{if .Tags}}
-            <div class="mt-3">
-                <p class="text-xs text-gray-500 mb-1.5">Tags</p>
-                <div class="flex flex-wrap gap-1.5">
-                    {{range .Tags}}
-                    <span class="px-2 py-0.5 rounded-lg bg-purple-500/10 border border-purple-500/20 text-xs text-purple-400">{{.}}</span>
-                    {{end}}
-                </div>
-            </div>
-            {{end}}
-
-            {{if .PoliticalParty}}
-            <div class="mt-3">
-                <p class="text-xs text-gray-500 mb-1.5">Political Parties</p>
-                <div class="flex flex-wrap gap-1.5">
-                    {{range .PoliticalParty}}
-                    <span class="px-2 py-0.5 rounded-lg bg-surface-950/60 border border-surface-800/40 text-xs text-gray-300">{{.}}</span>
-                    {{end}}
-                </div>
-            </div>
-            {{end}}
-
-            {{if .Education}}
-            <div class="mt-3">
-                <p class="text-xs text-gray-500 mb-1.5">Education</p>
-                <div class="space-y-1">
-                    {{range .Education}}
-                    <div class="text-xs text-gray-300 bg-surface-950/60 border border-surface-800/40 rounded-lg px-3 py-2">
-                        <span class="font-medium">{{.Title}}</span>
-                        {{if .StartDate}}<span class="text-gray-500 ml-1">from {{.StartDate}}</span>{{end}}
-                        {{if .EndDate}}<span class="text-gray-500"> to {{.EndDate}}</span>{{end}}
+                {{if .Positions}}
+                <div>
+                    <p class="text-[10px] text-slate-600 uppercase tracking-wide mb-2 font-semibold">Political / Government Positions</p>
+                    <div class="space-y-1.5">
+                        {{range .Positions}}
+                        <div class="flex items-start gap-3 text-xs bg-surface-950/60 border border-surface-800/40 rounded-lg px-3 py-2">
+                            <svg class="w-3 h-3 text-amber-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
+                            <div>
+                                <span class="font-semibold text-slate-300">{{.Title}}</span>
+                                {{if .StartDate}}<span class="text-slate-500 ml-1">from {{.StartDate}}</span>{{end}}
+                                {{if .EndDate}}<span class="text-slate-500"> to {{.EndDate}}</span>{{end}}
+                            </div>
+                        </div>
+                        {{end}}
                     </div>
-                    {{end}}
                 </div>
-            </div>
-            {{end}}
+                {{end}}
 
-            {{if .Dataset}}
-            <div class="mt-3">
-                <p class="text-xs text-gray-500 mb-1.5">Sources</p>
-                <div class="flex flex-wrap gap-1.5">
-                    {{range .Dataset}}
-                    <a href="{{.URL}}" target="_blank" class="px-2 py-0.5 rounded-lg bg-brand-500/10 border border-brand-500/20 text-xs text-brand-400 hover:bg-brand-500/20 transition-colors break-all">{{.Name}}</a>
-                    {{end}}
+                {{if .Sanctions}}
+                <div>
+                    <p class="text-[10px] text-slate-600 uppercase tracking-wide mb-2 font-semibold">Active Sanctions</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        {{range .Sanctions}}
+                        <span class="px-2.5 py-1 rounded-lg bg-red-500/10 border border-red-500/25 text-xs font-medium text-red-400">{{.}}</span>
+                        {{end}}
+                    </div>
                 </div>
+                {{end}}
+
+                {{if .Tags}}
+                <div>
+                    <p class="text-[10px] text-slate-600 uppercase tracking-wide mb-2 font-semibold">Risk Tags</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        {{range .Tags}}
+                        <span class="px-2.5 py-1 rounded-lg bg-purple-500/10 border border-purple-500/25 text-xs text-purple-400">{{.}}</span>
+                        {{end}}
+                    </div>
+                </div>
+                {{end}}
+
+                {{if .PoliticalParty}}
+                <div>
+                    <p class="text-[10px] text-slate-600 uppercase tracking-wide mb-2 font-semibold">Political Party Affiliations</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        {{range .PoliticalParty}}
+                        <span class="px-2.5 py-1 rounded-lg bg-surface-950/60 border border-surface-800/40 text-xs text-slate-300">{{.}}</span>
+                        {{end}}
+                    </div>
+                </div>
+                {{end}}
+
+                {{if .Education}}
+                <div>
+                    <p class="text-[10px] text-slate-600 uppercase tracking-wide mb-2 font-semibold">Education Background</p>
+                    <div class="space-y-1.5">
+                        {{range .Education}}
+                        <div class="text-xs bg-surface-950/60 border border-surface-800/40 rounded-lg px-3 py-2 text-slate-300">
+                            <span class="font-medium">{{.Title}}</span>
+                            {{if .StartDate}}<span class="text-slate-500 ml-1">from {{.StartDate}}</span>{{end}}
+                            {{if .EndDate}}<span class="text-slate-500"> to {{.EndDate}}</span>{{end}}
+                        </div>
+                        {{end}}
+                    </div>
+                </div>
+                {{end}}
+
+                {{if .Dataset}}
+                <div>
+                    <p class="text-[10px] text-slate-600 uppercase tracking-wide mb-2 font-semibold">Data Sources</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        {{range .Dataset}}
+                        <a href="{{.URL}}" target="_blank" rel="noopener"
+                           class="px-2.5 py-1 rounded-lg bg-brand-500/10 border border-brand-500/20 text-xs text-brand-400 hover:bg-brand-500/20 transition-colors flex items-center gap-1">
+                            {{.Name}}
+                            <svg class="w-2.5 h-2.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                        </a>
+                        {{end}}
+                    </div>
+                    <p class="text-[10px] text-slate-600 mt-1.5">Click a source to view the original listing.</p>
+                </div>
+                {{end}}
             </div>
-            {{end}}
         </div>
         {{end}}
     </div>
