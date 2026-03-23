@@ -11,7 +11,10 @@ import (
 	"time"
 )
 
-const defaultBaseURL = "https://sigmaprod.sabipay.com/"
+const (
+	defaultBaseURL    = "https://sigmaprod.sabipay.com/"
+	defaultAMLBaseURL = "https://sigmaaml.sabipay.com/"
+)
 
 type ClientOption func(*Client)
 
@@ -23,20 +26,27 @@ func WithBaseURL(urlStr string) ClientOption {
 	return func(c *Client) { c.baseURL, _ = url.Parse(urlStr) }
 }
 
+func WithAMLBaseURL(urlStr string) ClientOption {
+	return func(c *Client) { c.amlBaseURL, _ = url.Parse(urlStr) }
+}
+
 type Client struct {
 	apiKey     string
 	apiSecret  string
 	baseURL    *url.URL
+	amlBaseURL *url.URL
 	httpClient *http.Client
 }
 
 // New initializes a new Sigma API client
 func New(apiKey, apiSecret string, opts ...ClientOption) *Client {
 	baseURL, _ := url.Parse(defaultBaseURL)
+	amlBaseURL, _ := url.Parse(defaultAMLBaseURL)
 
 	c := &Client{
 		apiKey:     apiKey,
 		baseURL:    baseURL,
+		amlBaseURL: amlBaseURL,
 		apiSecret:  apiSecret,
 		httpClient: &http.Client{Timeout: 10 * time.Second},
 	}
@@ -46,9 +56,18 @@ func New(apiKey, apiSecret string, opts ...ClientOption) *Client {
 	return c
 }
 
+// doSigmaRequest makes an authenticated request against the Transaction Monitoring base URL.
 func (c *Client) doSigmaRequest(ctx context.Context, method, endpoint string, payload any, responseTarget any) error {
+	return c.doRequest(ctx, c.baseURL, method, endpoint, payload, responseTarget)
+}
+
+// doAMLRequest makes an authenticated request against the AML base URL (PEP, Sanctions, Adverse Media).
+func (c *Client) doAMLRequest(ctx context.Context, method, endpoint string, payload any, responseTarget any) error {
+	return c.doRequest(ctx, c.amlBaseURL, method, endpoint, payload, responseTarget)
+}
+
+func (c *Client) doRequest(ctx context.Context, base *url.URL, method, endpoint string, payload any, responseTarget any) error {
 	var bodyReader io.Reader
-	var err error
 
 	// Prepare the payload
 	if payload != nil {
@@ -64,7 +83,7 @@ func (c *Client) doSigmaRequest(ctx context.Context, method, endpoint string, pa
 	if err != nil {
 		return err
 	}
-	fullURL := c.baseURL.ResolveReference(parsedPath).String()
+	fullURL := base.ResolveReference(parsedPath).String()
 
 	// Create the request
 	req, err := http.NewRequestWithContext(ctx, method, fullURL, bodyReader)
@@ -98,7 +117,6 @@ func (c *Client) doSigmaRequest(ctx context.Context, method, endpoint string, pa
 		}
 
 		// Try to decode the Sigma API's JSON error response
-		// If decoding fails, we just keep the status code and add a generic message
 		if err := json.NewDecoder(resp.Body).Decode(apiErr); err != nil {
 			apiErr.Message = "failed to parse error response from sigma"
 		}
@@ -119,7 +137,6 @@ func (c *Client) doSigmaRequest(ctx context.Context, method, endpoint string, pa
 			apiErr.err = ErrUnknown
 		}
 
-		// Return the beautifully wrapped custom error
 		return apiErr
 	}
 

@@ -76,7 +76,7 @@ type Education struct {
 func (c *Client) CheckPEP(ctx context.Context, req *ScreeningRequest) (*ScreeningResponse, error) {
 	var resp ScreeningResponse
 
-	err := c.doSigmaRequest(ctx, "POST", "api/v1/aml/pep/instant", req, &resp)
+	err := c.doAMLRequest(ctx, "POST", "api/v1/aml/pep/instant", req, &resp)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func (c *Client) CheckSanction(ctx context.Context, req *ScreeningRequest) (*Scr
 	var resp ScreeningResponse
 
 	// NOTE: The provided documentation has a typo "sacntion".
-	err := c.doSigmaRequest(ctx, "POST", "api/v1/aml/sacntion/instant", req, &resp)
+	err := c.doAMLRequest(ctx, "POST", "api/v1/aml/sacntion/instant", req, &resp)
 	if err != nil {
 		return nil, err
 	}

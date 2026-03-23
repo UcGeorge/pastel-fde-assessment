@@ -1,0 +1,151 @@
+{{define "screening_result"}}
+<div class="animate-fade-in space-y-6">
+    {{if .Error}}
+    <div class="bg-red-500/10 border border-red-500/30 rounded-2xl p-6">
+        <div class="flex items-center gap-3">
+            <svg class="w-6 h-6 text-red-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+            <div>
+                <h3 class="text-sm font-semibold text-red-300">API Error</h3>
+                <p class="text-sm text-red-400 mt-1">{{.Error}}</p>
+            </div>
+        </div>
+    </div>
+    {{else}}
+
+    <!-- Summary Banner -->
+    <div class="rounded-2xl p-6 {{if .Response.Data}}bg-amber-500/10 border border-amber-500/30{{else}}bg-emerald-500/10 border border-emerald-500/30{{end}}">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                {{if .Response.Data}}
+                <div class="w-14 h-14 rounded-2xl bg-amber-500/20 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+                </div>
+                {{else}}
+                <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                {{end}}
+                <div>
+                    <p class="text-xs font-medium {{if .Response.Data}}text-amber-400{{else}}text-emerald-400{{end}} uppercase tracking-wider">{{.Type}} Screening Result</p>
+                    <p class="text-2xl font-bold {{if .Response.Data}}text-amber-300{{else}}text-emerald-300{{end}}">
+                        {{if .Response.Data}}{{.Response.Count}} Match{{if gt .Response.Count 1}}es{{end}} Found{{else}}No Matches Found{{end}}
+                    </p>
+                    <p class="text-sm text-gray-400 mt-1">{{.Response.Message}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submitted Info -->
+    <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
+        <h3 class="text-sm font-semibold text-gray-300 mb-4">Information Submitted</h3>
+        <div class="grid grid-cols-3 gap-4">
+            <div>
+                <p class="text-xs text-gray-500 mb-1">Name</p>
+                <p class="text-sm font-medium text-gray-200">{{.Input.Name}}</p>
+            </div>
+            <div>
+                <p class="text-xs text-gray-500 mb-1">Threshold</p>
+                <p class="text-sm font-medium text-gray-200">{{.Input.Threshold}}</p>
+            </div>
+            <div>
+                <p class="text-xs text-gray-500 mb-1">Country</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.Country}}{{.Input.Country}}{{else}}—{{end}}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Matched Entities -->
+    {{if .Response.Data}}
+    <div class="space-y-4">
+        <h3 class="text-sm font-semibold text-gray-300">Matched Entities</h3>
+        {{range .Response.Data}}
+        <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <h4 class="text-lg font-semibold text-white">{{.Name}}</h4>
+                    <p class="text-xs text-gray-400 mt-0.5">{{.EntityType}} · ID: {{.ID}}</p>
+                </div>
+                <div class="flex gap-2">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                        Confidence: {{.ConfidenceScore}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                {{if .Gender}}
+                <div>
+                    <p class="text-xs text-gray-500 mb-1">Gender</p>
+                    <p class="text-gray-200 capitalize">{{.Gender}}</p>
+                </div>
+                {{end}}
+                {{if .BirthDate}}
+                <div>
+                    <p class="text-xs text-gray-500 mb-1">Birth Date</p>
+                    <p class="text-gray-200">{{.BirthDate}}</p>
+                </div>
+                {{end}}
+                {{if .Countries}}
+                <div>
+                    <p class="text-xs text-gray-500 mb-1">Countries</p>
+                    <p class="text-gray-200">{{range $i, $c := .Countries}}{{if $i}}, {{end}}{{$c}}{{end}}</p>
+                </div>
+                {{end}}
+            </div>
+
+            {{if .Aliases}}
+            <div class="mt-3">
+                <p class="text-xs text-gray-500 mb-1.5">Aliases</p>
+                <div class="flex flex-wrap gap-1.5">
+                    {{range .Aliases}}
+                    <span class="px-2 py-0.5 rounded-lg bg-surface-950/60 border border-surface-800/40 text-xs text-gray-300">{{.}}</span>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+
+            {{if .Positions}}
+            <div class="mt-3">
+                <p class="text-xs text-gray-500 mb-1.5">Positions</p>
+                <div class="space-y-1">
+                    {{range .Positions}}
+                    <div class="text-xs text-gray-300 bg-surface-950/60 border border-surface-800/40 rounded-lg px-3 py-2">
+                        <span class="font-medium">{{.Title}}</span>
+                        {{if .StartDate}}<span class="text-gray-500 ml-1">from {{.StartDate}}</span>{{end}}
+                        {{if .EndDate}}<span class="text-gray-500"> to {{.EndDate}}</span>{{end}}
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+
+            {{if .Sanctions}}
+            <div class="mt-3">
+                <p class="text-xs text-gray-500 mb-1.5">Sanctions</p>
+                <div class="flex flex-wrap gap-1.5">
+                    {{range .Sanctions}}
+                    <span class="px-2 py-0.5 rounded-lg bg-red-500/10 border border-red-500/20 text-xs text-red-400">{{.}}</span>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+
+            {{if .Dataset}}
+            <div class="mt-3">
+                <p class="text-xs text-gray-500 mb-1.5">Sources</p>
+                <div class="flex flex-wrap gap-1.5">
+                    {{range .Dataset}}
+                    <a href="{{.URL}}" target="_blank" class="px-2 py-0.5 rounded-lg bg-brand-500/10 border border-brand-500/20 text-xs text-brand-400 hover:bg-brand-500/20 transition-colors">{{.Name}}</a>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+        </div>
+        {{end}}
+    </div>
+    {{end}}
+
+    {{end}}
+</div>
+{{end}}

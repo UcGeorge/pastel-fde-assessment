@@ -1,0 +1,109 @@
+{{define "transaction"}}
+<div class="animate-fade-in">
+    <div class="mb-8">
+        <div class="flex items-center gap-3 mb-2">
+            <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                <svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/></svg>
+            </div>
+            <h2 class="text-2xl font-bold text-white tracking-tight">Transaction Monitoring</h2>
+        </div>
+        <p class="text-gray-400">Submit a transaction to Sigma's AI monitoring engine for real-time risk analysis.</p>
+    </div>
+
+    <form hx-post="/transaction/submit" hx-target="#result" hx-indicator="#loading" class="space-y-6">
+        <!-- Transaction Details -->
+        <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
+            <h3 class="text-sm font-semibold text-gray-300 mb-4 flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                Transaction Details
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Reference</label>
+                    <input type="text" name="reference" value="TXN-2303PE2FC" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Amount</label>
+                    <input type="number" name="amount" value="100.50" step="0.01" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Currency</label>
+                    <select name="currency" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all">
+                        <option value="USD">USD — US Dollar</option>
+                        <option value="NGN" selected>NGN — Nigerian Naira</option>
+                        <option value="GBP">GBP — British Pound</option>
+                        <option value="EUR">EUR — Euro</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Channel</label>
+                    <select name="channel" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all">
+                        <option value="pos" selected>POS</option>
+                        <option value="web transfer">Web Transfer</option>
+                        <option value="bank transfer">Bank Transfer</option>
+                        <option value="mobile transfer">Mobile Transfer</option>
+                        <option value="card payment">Card Payment</option>
+                        <option value="atm">ATM</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Type</label>
+                    <select name="type" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all">
+                        <option value="debit" selected>Debit</option>
+                        <option value="credit">Credit</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Narration</label>
+                    <input type="text" name="narration" value="Payment for services" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Sender Account</label>
+                    <input type="text" name="sender_account" value="01929393923" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Receiver Account</label>
+                    <input type="text" name="receiver_account" value="93829392233" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600">
+                </div>
+            </div>
+        </div>
+
+        <!-- User & Device Details -->
+        <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
+            <h3 class="text-sm font-semibold text-gray-300 mb-4 flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+                User & Device Info
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">User Unique ID</label>
+                    <input type="text" name="unique_id" value="e8baeb9c-e563-11ed-b5ea-0242ac120002" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all font-mono text-xs placeholder-gray-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Country</label>
+                    <input type="text" name="country" value="Nigeria" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Device ID</label>
+                    <input type="text" name="device_id" value="J020D23020D03300303203D3232DDD" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all font-mono text-xs placeholder-gray-600">
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="htmx-hide-on-request w-full bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/20 hover:shadow-brand-500/30 active:scale-[0.98]">
+            Submit Transaction for Monitoring
+        </button>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="htmx-indicator justify-center py-3">
+            <div class="flex items-center gap-3 text-gray-400">
+                <svg class="animate-spin w-5 h-5 text-brand-400" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
+                <span class="text-sm font-medium">Analyzing transaction with Sigma AI...</span>
+            </div>
+        </div>
+    </form>
+
+    <!-- Result Container -->
+    <div id="result" class="mt-6"></div>
+</div>
+{{end}}
