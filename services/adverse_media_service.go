@@ -8,11 +8,11 @@ import (
 
 // AdverseMediaService wraps the Sigma SDK for adverse media screening operations.
 type AdverseMediaService struct {
-	client *sigma.Client
+	client sigma.SigmaClient
 }
 
 // NewAdverseMediaService creates a new AdverseMediaService.
-func NewAdverseMediaService(client *sigma.Client) *AdverseMediaService {
+func NewAdverseMediaService(client sigma.SigmaClient) *AdverseMediaService {
 	return &AdverseMediaService{client: client}
 }
 

@@ -9,11 +9,11 @@ import (
 
 // TransactionService wraps the Sigma SDK for transaction monitoring operations.
 type TransactionService struct {
-	client *sigma.Client
+	client sigma.SigmaClient
 }
 
 // NewTransactionService creates a new TransactionService with the given SDK client.
-func NewTransactionService(client *sigma.Client) *TransactionService {
+func NewTransactionService(client sigma.SigmaClient) *TransactionService {
 	return &TransactionService{client: client}
 }
 

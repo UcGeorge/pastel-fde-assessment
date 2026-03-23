@@ -8,11 +8,11 @@ import (
 
 // ScreeningService wraps the Sigma SDK for PEP and Sanctions screening operations.
 type ScreeningService struct {
-	client *sigma.Client
+	client sigma.SigmaClient
 }
 
 // NewScreeningService creates a new ScreeningService.
-func NewScreeningService(client *sigma.Client) *ScreeningService {
+func NewScreeningService(client sigma.SigmaClient) *ScreeningService {
 	return &ScreeningService{client: client}
 }
 
