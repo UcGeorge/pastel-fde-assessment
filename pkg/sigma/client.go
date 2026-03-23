@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-const defaultBaseURL = "https://sigma.pastel.africa/api/v1/"
+const defaultBaseURL = "https://sigmaprod.sabipay.com/"
 
 type ClientOption func(*Client)
 
@@ -30,8 +30,8 @@ type Client struct {
 	httpClient *http.Client
 }
 
-// NewClient initializes a new Sigma API client
-func NewClient(apiKey, apiSecret string, opts ...ClientOption) *Client {
+// New initializes a new Sigma API client
+func New(apiKey, apiSecret string, opts ...ClientOption) *Client {
 	baseURL, _ := url.Parse(defaultBaseURL)
 
 	c := &Client{
@@ -125,7 +125,8 @@ func (c *Client) doSigmaRequest(ctx context.Context, method, endpoint string, pa
 
 	// Decode the successful response
 	if responseTarget != nil {
-		if err := json.NewDecoder(resp.Body).Decode(responseTarget); err != nil {
+		decoder := json.NewDecoder(resp.Body)
+		if err := decoder.Decode(responseTarget); err != nil {
 			return fmt.Errorf("failed to decode API response: %w", err)
 		}
 	}
