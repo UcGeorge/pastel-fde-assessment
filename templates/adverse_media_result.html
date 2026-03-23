@@ -41,6 +41,39 @@
         </div>
     </div>
 
+    <!-- Summary of Findings -->
+    {{if .Response.Data.FindingsReturned}}
+    <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
+        <h3 class="text-sm font-semibold text-gray-300 mb-4">Summary of Findings</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
+                <p class="text-xs text-gray-500 mb-1">Adverse Media Findings Returned?</p>
+                <p class="text-sm font-medium {{if .Response.Data.FindingsReturned}}text-rose-400{{else}}text-emerald-400{{end}}">
+                    {{if .Response.Data.FindingsReturned}}Yes{{else}}No{{end}}
+                </p>
+            </div>
+            {{if .Response.Data.RiskCategory}}
+            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
+                <p class="text-xs text-gray-500 mb-1">Category of Risk</p>
+                <p class="text-sm font-medium {{if eq (print .Response.Data.RiskCategory) "High"}}text-rose-400{{else if eq (print .Response.Data.RiskCategory) "Medium"}}text-amber-400{{else}}text-green-400{{end}}">
+                    {{.Response.Data.RiskCategory}}
+                </p>
+            </div>
+            {{end}}
+            {{if .Response.Data.Sources}}
+            <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
+                <p class="text-xs text-gray-500 mb-1">Sources</p>
+                <div class="flex flex-wrap gap-1.5 mt-1">
+                    {{range .Response.Data.Sources}}
+                    <span class="px-2 py-0.5 rounded-lg bg-surface-800/60 border border-surface-700/60 text-xs text-gray-300">{{.}}</span>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </div>
+    {{end}}
+
     <!-- Full Response -->
     {{if .Response.Data}}
     <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">

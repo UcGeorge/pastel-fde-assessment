@@ -1,5 +1,5 @@
 {{define "transaction"}}
-<div class="animate-fade-in">
+<div class="animate-fade-in pb-12">
     <div class="mb-8">
         <div class="flex items-center gap-3 mb-2">
             <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
@@ -7,37 +7,42 @@
             </div>
             <h2 class="text-2xl font-bold text-white tracking-tight">Transaction Monitoring</h2>
         </div>
-        <p class="text-gray-400">Submit a transaction to Sigma's AI monitoring engine for real-time risk analysis.</p>
+        <p class="text-gray-400">Submit a comprehensive transaction payload to Sigma's AI monitoring engine.</p>
     </div>
 
     <form hx-post="/transaction/submit" hx-target="#result" hx-indicator="#loading" class="space-y-6">
-        <!-- Transaction Details -->
+        
+        <!-- Transaction Data (Required) -->
         <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
             <h3 class="text-sm font-semibold text-gray-300 mb-4 flex items-center gap-2">
                 <svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
-                Transaction Details
+                Transaction Details (Required)
             </h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Reference</label>
-                    <input type="text" name="reference" value="TXN-2303PE2FC" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600" required>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Reference <span class="text-red-500">*</span></label>
+                    <input type="text" name="reference" value="TXN-2303PE2FC" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600" required>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Amount</label>
-                    <input type="number" name="amount" value="100.50" step="0.01" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600" required>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Amount <span class="text-red-500">*</span></label>
+                    <input type="number" name="amount" value="100.50" step="0.01" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600" required>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Currency</label>
-                    <select name="currency" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all">
-                        <option value="USD">USD — US Dollar</option>
-                        <option value="NGN" selected>NGN — Nigerian Naira</option>
-                        <option value="GBP">GBP — British Pound</option>
-                        <option value="EUR">EUR — Euro</option>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Currency <span class="text-red-500">*</span></label>
+                    <select name="currency" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all">
+                        <option value="NGN" selected>NGN</option>
+                        <option value="USD">USD</option>
+                        <option value="GBP">GBP</option>
+                        <option value="EUR">EUR</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Channel</label>
-                    <select name="channel" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all">
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Date & Time <span class="text-red-500">*</span></label>
+                    <input type="datetime-local" name="transaction_date" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Channel <span class="text-red-500">*</span></label>
+                    <select name="channel" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all">
                         <option value="card payment">Card Payment</option>
                         <option value="web transfer">Web Transfer</option>
                         <option value="bank transfer">Bank Transfer</option>
@@ -55,58 +60,226 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Type</label>
-                    <select name="type" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all">
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Type <span class="text-red-500">*</span></label>
+                    <select name="type" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all">
                         <option value="debit" selected>Debit</option>
                         <option value="credit">Credit</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Narration</label>
-                    <input type="text" name="narration" value="Payment for services" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600">
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Status <span class="text-red-500">*</span></label>
+                    <select name="status" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all">
+                        <option value="true" selected>Successful</option>
+                        <option value="false">Failed</option>
+                    </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Sender Account</label>
-                    <input type="text" name="sender_account" value="01929393923" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Receiver Account</label>
-                    <input type="text" name="receiver_account" value="93829392233" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600">
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Is External Payment <span class="text-red-500">*</span></label>
+                    <select name="is_external_payment" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all">
+                        <option value="true">Yes</option>
+                        <option value="false" selected>No</option>
+                    </select>
                 </div>
             </div>
         </div>
 
-        <!-- User & Device Details -->
+        <!-- Anonymized User Data (Required) -->
         <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
             <h3 class="text-sm font-semibold text-gray-300 mb-4 flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
-                User & Device Info
+                <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+                Anonymized User ID (Required)
             </h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">User Unique ID</label>
-                    <input type="text" name="unique_id" value="e8baeb9c-e563-11ed-b5ea-0242ac120002" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all font-mono text-xs placeholder-gray-600">
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">User Unique ID <span class="text-red-500">*</span></label>
+                    <input type="text" name="unique_id" value="USR-10293" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all" required>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Country</label>
-                    <input type="text" name="country" value="Nigeria" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all placeholder-gray-600">
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Is Banned <span class="text-red-500">*</span></label>
+                    <select name="is_banned" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all">
+                        <option value="true">Yes</option>
+                        <option value="false" selected>No</option>
+                    </select>
                 </div>
-                <div class="md:col-span-2">
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Device ID</label>
-                    <input type="text" name="device_id" value="J020D23020D03300303203D3232DDD" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all font-mono text-xs placeholder-gray-600">
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Is Identity Verified <span class="text-red-500">*</span></label>
+                    <select name="is_identity_verified" class="w-full bg-surface-950/60 border border-surface-700/60 rounded-xl px-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 transition-all">
+                        <option value="true" selected>Yes</option>
+                        <option value="false">No</option>
+                    </select>
                 </div>
             </div>
         </div>
 
-        <button type="submit" class="htmx-hide-on-request w-full bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/20 hover:shadow-brand-500/30 active:scale-[0.98]">
-            Submit Transaction for Monitoring
+        <!-- Optional Core Metadata -->
+        <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
+            <h3 class="text-sm font-semibold text-gray-300 mb-4 flex items-center gap-2">Optional Metadata</h3>
+            
+            <!-- Core Form Toggles -->
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-3 mb-6">
+                <label class="flex items-center gap-2 text-xs text-gray-300"><input type="checkbox" name="refund" value="true" class="rounded border-gray-600"> Refund?</label>
+                <label class="flex items-center gap-2 text-xs text-gray-300"><input type="checkbox" name="is_cheque" value="true" class="rounded border-gray-600"> Cheque?</label>
+                <label class="flex items-center gap-2 text-xs text-gray-300"><input type="checkbox" name="is_internal_account" value="true" class="rounded border-gray-600"> Internal Acc?</label>
+                <label class="flex items-center gap-2 text-xs text-gray-300"><input type="checkbox" name="is_staff_account" value="true" class="rounded border-gray-600"> Staff Acc?</label>
+                <label class="flex items-center gap-2 text-xs text-gray-300"><input type="checkbox" name="is_dormant_account" value="true" class="rounded border-gray-600"> Dormant Acc?</label>
+                <label class="flex items-center gap-2 text-xs text-gray-300"><input type="checkbox" name="is_phone_number_verified" value="true" class="rounded border-gray-600"> Phone Verified?</label>
+            </div>
+
+            <!-- More Details -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">Sender Account</label>
+                    <input type="text" name="sender_account" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">Receiver Account</label>
+                    <input type="text" name="receiver_account" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">Balance Before</label>
+                    <input type="number" name="balance_before" step="0.01" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">Narration</label>
+                    <input type="text" name="narration" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">Trxn Email</label>
+                    <input type="email" name="email" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">Session ID</label>
+                    <input type="text" name="session_id" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">VAS Receiver</label>
+                    <input type="text" name="vas_receiver" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+
+                <!-- Extended user stats -->
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">Account Type</label>
+                    <select name="account_type" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                        <option value="">(Select)</option>
+                        <option value="individual">Individual</option>
+                        <option value="corporate">Corporate</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">Business Category</label>
+                    <input type="text" name="business_category" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">User Age</label>
+                    <input type="number" name="age" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">Date Joined</label>
+                    <input type="date" name="date_joined" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">User Country</label>
+                    <input type="text" name="user_country" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">City</label>
+                    <input type="text" name="city" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">State</label>
+                    <input type="text" name="state" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-medium text-gray-500 mb-1 uppercase tracking-wide">IP Address</label>
+                    <input type="text" name="ip_address" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-1.5 text-xs text-gray-300">
+                </div>
+            </div>
+        </div>
+
+        <!-- Optional Groups -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <!-- Device Info -->
+            <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
+                <h3 class="text-sm font-semibold text-gray-300 mb-4">Device Info (Optional)</h3>
+                <div class="space-y-3">
+                    <input type="text" name="device_id" placeholder="Device ID" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" name="device_name" placeholder="Name (e.g iPhone)" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                        <input type="text" name="manufacturer" placeholder="Manufacturer" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                        <input type="text" name="os_name" placeholder="OS Name" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                        <input type="text" name="os_version" placeholder="OS Version" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Info -->
+            <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
+                <h3 class="text-sm font-semibold text-gray-300 mb-4">Location (Optional)</h3>
+                <div class="space-y-3">
+                    <input type="text" name="loc_country" placeholder="Country" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" name="latitude" placeholder="Latitude" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                        <input type="text" name="longitude" placeholder="Longitude" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Third Party Data -->
+            <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
+                <h3 class="text-sm font-semibold text-gray-300 mb-4">3rd Party User Data (Optional)</h3>
+                <div class="space-y-3">
+                    <input type="text" name="third_party_unique_id" placeholder="Unique ID" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                    <input type="text" name="card_pan" placeholder="Card PAN" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                    <input type="email" name="third_party_email" placeholder="Email" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                </div>
+            </div>
+
+            <!-- Limits Data -->
+            <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
+                <h3 class="text-sm font-semibold text-gray-300 mb-4">Limits (Optional)</h3>
+                <div class="space-y-3">
+                    <input type="number" name="daily_limit" placeholder="Daily Limit" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                    <input type="number" name="overdraft_limit" placeholder="Overdraft Limit" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                    <input type="number" name="individual_transaction_limit" placeholder="Individual Trxn Limit" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                </div>
+            </div>
+
+            <!-- Screening Data -->
+            <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
+                <h3 class="text-sm font-semibold text-gray-300 mb-4">Screening Data (Optional)</h3>
+                <div class="space-y-3">
+                    <input type="text" name="screening_sender_name" placeholder="Sender Name" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                    <input type="text" name="screening_receiver_name" placeholder="Receiver Name" class="w-full bg-surface-950/40 border border-surface-800 rounded-lg px-3 py-2 text-xs text-gray-300">
+                </div>
+            </div>
+
+            <!-- Beneficiary Data -->
+            <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
+                <h3 class="text-sm font-semibold text-gray-300 mb-4 flex justify-between">
+                    Beneficiary Info
+                    <label class="flex items-center gap-2 text-xs text-gray-300"><input type="checkbox" name="has_beneficiary" value="true" class="rounded border-gray-600"> Pass Object?</label>
+                </h3>
+                <div class="flex items-center gap-6 mt-4">
+                    <label class="flex items-center gap-2 text-xs text-gray-300"><input type="checkbox" name="is_registered_beneficiary" value="true" class="rounded border-gray-600"> Registered?</label>
+                    <label class="flex items-center gap-2 text-xs text-gray-300"><input type="checkbox" name="is_new_beneficiary" value="true" class="rounded border-gray-600"> New?</label>
+                </div>
+            </div>
+            
+        </div>
+
+
+        <button type="submit" class="htmx-hide-on-request w-full bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/20 hover:shadow-brand-500/30 active:scale-[0.98] mt-6">
+            Submit Extensive Transaction for Monitoring
         </button>
 
         <!-- Loading Indicator -->
         <div id="loading" class="htmx-indicator justify-center py-3">
             <div class="flex items-center gap-3 text-gray-400">
                 <svg class="animate-spin w-5 h-5 text-brand-400" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
-                <span class="text-sm font-medium">Analyzing transaction with Sigma AI...</span>
+                <span class="text-sm font-medium">Analyzing fully constructed model with Sigma AI...</span>
             </div>
         </div>
     </form>
@@ -114,4 +287,8 @@
     <!-- Result Container -->
     <div id="result" class="mt-6"></div>
 </div>
+<script>
+    // Autofill the date to present
+    document.querySelector('input[name="transaction_date"]').value = new Date().toISOString().slice(0, 16);
+</script>
 {{end}}

@@ -55,40 +55,139 @@
     <!-- Transaction Details Sent -->
     <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
         <h3 class="text-sm font-semibold text-gray-300 mb-4">Transaction Details Submitted</h3>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        
+        <p class="text-xs font-medium text-blue-400 mb-2 mt-4 uppercase tracking-wider block">Core Data</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             <div>
-                <p class="text-xs text-gray-500 mb-1">Reference</p>
+                <p class="text-[10px] text-gray-500 uppercase">Reference</p>
                 <p class="text-sm font-medium text-gray-200 font-mono">{{.Input.Reference}}</p>
             </div>
             <div>
-                <p class="text-xs text-gray-500 mb-1">Amount</p>
+                <p class="text-[10px] text-gray-500 uppercase">Amount</p>
                 <p class="text-sm font-medium text-gray-200">{{.Input.Currency}} {{.Input.Amount}}</p>
             </div>
             <div>
-                <p class="text-xs text-gray-500 mb-1">Channel</p>
+                <p class="text-[10px] text-gray-500 uppercase">Channel</p>
                 <p class="text-sm font-medium text-gray-200 capitalize">{{.Input.Channel}}</p>
             </div>
             <div>
-                <p class="text-xs text-gray-500 mb-1">Type</p>
+                <p class="text-[10px] text-gray-500 uppercase">Type</p>
                 <p class="text-sm font-medium text-gray-200 capitalize">{{.Input.Type}}</p>
             </div>
             <div>
-                <p class="text-xs text-gray-500 mb-1">Sender</p>
-                <p class="text-sm font-medium text-gray-200 font-mono">{{.Input.SenderAccount}}</p>
+                <p class="text-[10px] text-gray-500 uppercase">Status</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.Status}}Successful{{else}}Failed{{end}}</p>
             </div>
             <div>
-                <p class="text-xs text-gray-500 mb-1">Receiver</p>
-                <p class="text-sm font-medium text-gray-200 font-mono">{{.Input.ReceiverAccount}}</p>
+                <p class="text-[10px] text-gray-500 uppercase">Trxn Date</p>
+                <p class="text-sm font-medium text-gray-200">{{.Input.TransactionDate.Format "2006-01-02 15:04"}}</p>
             </div>
             <div>
-                <p class="text-xs text-gray-500 mb-1">Currency</p>
-                <p class="text-sm font-medium text-gray-200">{{.Input.Currency}}</p>
+                <p class="text-[10px] text-gray-500 uppercase">External Payment</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.IsExternalPayment}}Yes{{else}}No{{end}}</p>
             </div>
             <div>
-                <p class="text-xs text-gray-500 mb-1">Country</p>
-                <p class="text-sm font-medium text-gray-200">{{.Input.Country}}</p>
+                <p class="text-[10px] text-gray-500 uppercase">Refund</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.Refund}}Yes{{else}}No{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Is Cheque</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.IsCheque}}Yes{{else}}No{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Dormant Acc</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.IsDormantAccount}}Yes{{else}}No{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Sender</p>
+                <p class="text-sm font-medium text-gray-200 font-mono">{{if .Input.SenderAccount}}{{.Input.SenderAccount}}{{else}}—{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Receiver</p>
+                <p class="text-sm font-medium text-gray-200 font-mono">{{if .Input.ReceiverAccount}}{{.Input.ReceiverAccount}}{{else}}—{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Narration</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.Narration}}{{.Input.Narration}}{{else}}—{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Balance Before</p>
+                <p class="text-sm font-medium text-gray-200">{{if gt .Input.BalanceBefore 0.0}}{{.Input.BalanceBefore}}{{else}}—{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Session ID</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.SessionID}}{{.Input.SessionID}}{{else}}—{{end}}</p>
             </div>
         </div>
+
+        <p class="text-xs font-medium text-emerald-400 mb-2 mt-6 uppercase tracking-wider block">User Context</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Unique ID</p>
+                <p class="text-sm font-medium text-gray-200">{{.Input.UniqueID}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Banned</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.IsBanned}}Yes{{else}}No{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Identity Verified</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.IsIdentityVerified}}Yes{{else}}No{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Acc Type</p>
+                <p class="text-sm font-medium text-gray-200 capitalize">{{if .Input.AccountType}}{{.Input.AccountType}}{{else}}—{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Date Joined</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.DateJoined.IsZero}}—{{else}}{{.Input.DateJoined.Format "2006-01-02"}}{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Business Category</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.BusinessCategory}}{{.Input.BusinessCategory}}{{else}}—{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Country</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.UserCountry}}{{.Input.UserCountry}}{{else}}—{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">State</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.State}}{{.Input.State}}{{else}}—{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Age</p>
+                <p class="text-sm font-medium text-gray-200">{{if gt .Input.Age 0}}{{.Input.Age}}{{else}}—{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Phone Verified</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.IsPhoneNumberVerified}}Yes{{else}}No{{end}}</p>
+            </div>
+        </div>
+
+        <p class="text-xs font-medium text-purple-400 mb-2 mt-6 uppercase tracking-wider block">Additional Settings</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Device ID</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.DeviceID}}{{.Input.DeviceID}}{{else}}—{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Device OS</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.OSName}}{{.Input.OSName}}{{if .Input.OSVersion}} {{.Input.OSVersion}}{{end}}{{else}}—{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Coordinates</p>
+                <p class="text-sm font-medium text-gray-200">{{if and .Input.Latitude .Input.Longitude}}{{.Input.Latitude}}, {{.Input.Longitude}}{{else}}—{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">Daily Limit</p>
+                <p class="text-sm font-medium text-gray-200">{{if gt .Input.DailyLimit 0.0}}{{.Input.DailyLimit}}{{else}}—{{end}}</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase">IP Address</p>
+                <p class="text-sm font-medium text-gray-200">{{if .Input.IPAddress}}{{.Input.IPAddress}}{{else}}—{{end}}</p>
+            </div>
+        </div>
+
     </div>
 
     {{if and .Response .Response.Data}}

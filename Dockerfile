@@ -25,3 +25,5 @@ COPY templates/ ./templates
 COPY --from=builder /app/serve .
 
 EXPOSE 80
+
+CMD ["/app/serve"]

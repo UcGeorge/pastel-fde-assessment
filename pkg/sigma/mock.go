@@ -205,12 +205,15 @@ func (m *MockClient) CheckAdverseMedia(_ context.Context, req *AdverseMediaReque
 	return &AdverseMediaResponse{
 		Message: "Adverse media check request submitted successfully",
 		Data: &AdverseMediaData{
-			ID:              randID(),
-			Query:           req.Query,
-			BusinessProfile: randID()[:8],
-			Status:          pick(mediaStatuses...),
-			CreatedAt:       now.Format(time.RFC3339),
-			UpdatedAt:       now.Add(time.Duration(randBetween(1, 60)) * time.Second).Format(time.RFC3339),
+			ID:               randID(),
+			Query:            req.Query,
+			BusinessProfile:  randID()[:8],
+			Status:           "completed",
+			CreatedAt:        now.Format(time.RFC3339),
+			UpdatedAt:        now.Add(time.Duration(randBetween(1, 60)) * time.Second).Format(time.RFC3339),
+			FindingsReturned: ptr(true),
+			RiskCategory:     ptr(pick("High", "Medium", "Low")),
+			Sources:          []string{pick("Global News", "Local Media", "Financial Times"), pick("Reuters", "Bloomberg")},
 		},
 	}, nil
 }
