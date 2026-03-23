@@ -57,10 +57,10 @@
         <h3 class="text-sm font-semibold text-gray-300 mb-4">Transaction Details Submitted</h3>
         
         <p class="text-xs font-medium text-blue-400 mb-2 mt-4 uppercase tracking-wider block">Core Data</p>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             <div>
                 <p class="text-[10px] text-gray-500 uppercase">Reference</p>
-                <p class="text-sm font-medium text-gray-200 font-mono">{{.Input.Reference}}</p>
+                <p class="text-sm font-medium text-gray-200 font-mono break-all">{{.Input.Reference}}</p>
             </div>
             <div>
                 <p class="text-[10px] text-gray-500 uppercase">Amount</p>
@@ -100,11 +100,11 @@
             </div>
             <div>
                 <p class="text-[10px] text-gray-500 uppercase">Sender</p>
-                <p class="text-sm font-medium text-gray-200 font-mono">{{if .Input.SenderAccount}}{{.Input.SenderAccount}}{{else}}—{{end}}</p>
+                <p class="text-sm font-medium text-gray-200 font-mono break-all">{{if .Input.SenderAccount}}{{.Input.SenderAccount}}{{else}}—{{end}}</p>
             </div>
             <div>
                 <p class="text-[10px] text-gray-500 uppercase">Receiver</p>
-                <p class="text-sm font-medium text-gray-200 font-mono">{{if .Input.ReceiverAccount}}{{.Input.ReceiverAccount}}{{else}}—{{end}}</p>
+                <p class="text-sm font-medium text-gray-200 font-mono break-all">{{if .Input.ReceiverAccount}}{{.Input.ReceiverAccount}}{{else}}—{{end}}</p>
             </div>
             <div>
                 <p class="text-[10px] text-gray-500 uppercase">Narration</p>
@@ -114,17 +114,17 @@
                 <p class="text-[10px] text-gray-500 uppercase">Balance Before</p>
                 <p class="text-sm font-medium text-gray-200">{{if gt .Input.BalanceBefore 0.0}}{{.Input.BalanceBefore}}{{else}}—{{end}}</p>
             </div>
-            <div>
+            <div class="col-span-full sm:col-span-1">
                 <p class="text-[10px] text-gray-500 uppercase">Session ID</p>
-                <p class="text-sm font-medium text-gray-200">{{if .Input.SessionID}}{{.Input.SessionID}}{{else}}—{{end}}</p>
+                <p class="text-sm font-medium text-gray-200 break-all">{{if .Input.SessionID}}{{.Input.SessionID}}{{else}}—{{end}}</p>
             </div>
         </div>
 
         <p class="text-xs font-medium text-emerald-400 mb-2 mt-6 uppercase tracking-wider block">User Context</p>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            <div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div class="col-span-full sm:col-span-1">
                 <p class="text-[10px] text-gray-500 uppercase">Unique ID</p>
-                <p class="text-sm font-medium text-gray-200">{{.Input.UniqueID}}</p>
+                <p class="text-sm font-medium text-gray-200 break-all">{{.Input.UniqueID}}</p>
             </div>
             <div>
                 <p class="text-[10px] text-gray-500 uppercase">Banned</p>
@@ -165,10 +165,10 @@
         </div>
 
         <p class="text-xs font-medium text-purple-400 mb-2 mt-6 uppercase tracking-wider block">Additional Settings</p>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            <div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div class="col-span-full sm:col-span-1">
                 <p class="text-[10px] text-gray-500 uppercase">Device ID</p>
-                <p class="text-sm font-medium text-gray-200">{{if .Input.DeviceID}}{{.Input.DeviceID}}{{else}}—{{end}}</p>
+                <p class="text-sm font-medium text-gray-200 break-all">{{if .Input.DeviceID}}{{.Input.DeviceID}}{{else}}—{{end}}</p>
             </div>
             <div>
                 <p class="text-[10px] text-gray-500 uppercase">Device OS</p>
@@ -228,7 +228,7 @@
             <!-- Screening Results -->
             <div class="bg-surface-950/60 rounded-xl p-4 border border-surface-800/40">
                 <p class="text-xs text-gray-500 mb-3">Screening Results</p>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <p class="text-xs font-medium text-gray-400 mb-2">Sender</p>
                         <div class="space-y-1">

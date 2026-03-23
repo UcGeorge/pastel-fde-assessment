@@ -39,7 +39,7 @@
     <!-- Submitted Info -->
     <div class="bg-surface-900/60 border border-surface-800/60 rounded-2xl p-6">
         <h3 class="text-sm font-semibold text-gray-300 mb-4">Information Submitted</h3>
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
             <div>
                 <p class="text-xs text-gray-500 mb-1">Name</p>
                 <p class="text-sm font-medium text-gray-200">{{.Input.Name}}</p>
@@ -64,7 +64,7 @@
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <h4 class="text-lg font-semibold text-white">{{.Name}}</h4>
-                    <p class="text-xs text-gray-400 mt-0.5">{{.EntityType}} · ID: {{.ID}}</p>
+                    <p class="text-xs text-gray-400 mt-0.5 break-all">{{.EntityType}} · ID: {{.ID}}</p>
                 </div>
                 <div class="flex gap-2">
                     <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/30">
@@ -76,7 +76,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                 {{if .Gender}}
                 <div>
                     <p class="text-xs text-gray-500 mb-1">Gender</p>
@@ -104,7 +104,7 @@
                 {{if .ExternalID}}
                 <div>
                     <p class="text-xs text-gray-500 mb-1">External ID</p>
-                    <p class="text-gray-200 font-mono text-xs">{{.ExternalID}}</p>
+                    <p class="text-gray-200 font-mono text-xs break-all">{{.ExternalID}}</p>
                 </div>
                 {{end}}
             </div>
@@ -188,7 +188,7 @@
                 <p class="text-xs text-gray-500 mb-1.5">Sources</p>
                 <div class="flex flex-wrap gap-1.5">
                     {{range .Dataset}}
-                    <a href="{{.URL}}" target="_blank" class="px-2 py-0.5 rounded-lg bg-brand-500/10 border border-brand-500/20 text-xs text-brand-400 hover:bg-brand-500/20 transition-colors">{{.Name}}</a>
+                    <a href="{{.URL}}" target="_blank" class="px-2 py-0.5 rounded-lg bg-brand-500/10 border border-brand-500/20 text-xs text-brand-400 hover:bg-brand-500/20 transition-colors break-all">{{.Name}}</a>
                     {{end}}
                 </div>
             </div>

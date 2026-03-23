@@ -40,9 +40,12 @@
     </style>
 </head>
 <body class="h-full bg-surface-950 text-gray-200 font-sans antialiased">
-    <div class="flex h-full">
+    <div class="flex h-full w-full">
+        <!-- Mobile Sidebar Overlay -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-surface-950/80 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity duration-300 opacity-0" onclick="toggleSidebar()"></div>
+
         <!-- Sidebar -->
-        <aside class="w-72 bg-surface-900/80 border-r border-surface-800/60 flex flex-col backdrop-blur-xl">
+        <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-50 w-72 bg-surface-900/95 lg:bg-surface-900/80 border-r border-surface-800/60 flex flex-col backdrop-blur-xl transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
             <div class="p-6 border-b border-surface-800/60">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-lg shadow-brand-500/20">
@@ -82,8 +85,24 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
-            <div class="max-w-5xl mx-auto px-8 py-8">
+        <main class="flex-1 flex flex-col min-w-0 overflow-y-auto relative">
+            <!-- Mobile Header -->
+            <div class="lg:hidden sticky top-0 z-30 flex items-center justify-between px-4 py-3 bg-surface-900/80 backdrop-blur-xl border-b border-surface-800/60">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-lg shadow-brand-500/20">
+                        <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+                    </div>
+                    <div>
+                        <span class="block text-sm font-bold text-white tracking-tight leading-none mb-0.5">Sigma</span>
+                        <span class="block text-[10px] text-gray-500 font-medium leading-none">Dashboard</span>
+                    </div>
+                </div>
+                <button onclick="toggleSidebar()" class="p-2 -mr-2 text-gray-400 hover:text-white transition-colors" aria-label="Toggle Menu">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+                </button>
+            </div>
+
+            <div class="max-w-5xl mx-auto w-full px-4 py-6 md:px-8 md:py-8">
                 {{if eq .Page "home"}}{{template "home" .}}{{end}}
                 {{if eq .Page "transaction"}}{{template "transaction" .}}{{end}}
                 {{if eq .Page "screening"}}{{template "screening" .}}{{end}}
@@ -91,6 +110,30 @@
             </div>
         </main>
     </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                // Open
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                // Small delay to allow display:block to apply before animating opacity
+                requestAnimationFrame(() => {
+                    overlay.classList.remove('opacity-0');
+                });
+            } else {
+                // Close
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+        }
+    </script>
 </body>
 </html>
 {{end}}
