@@ -7,3 +7,6 @@ status.txt
 
 # Build
 sigma-app
+
+# Secrets
+.env.docker

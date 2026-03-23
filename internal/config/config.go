@@ -19,7 +19,7 @@ func Load() *Config {
 		APISecret:  envOrDefault("SIGMA_API_SECRET", "ad8a3c3f-..."),
 		BaseURL:    envOrDefault("SIGMA_BASE_URL", "https://sigmaprod.sabipay.com/"),
 		AMLBaseURL: envOrDefault("SIGMA_AML_BASE_URL", "https://sigmaaml.sabipay.com/"),
-		Port:       envOrDefault("PORT", "8080"),
+		Port:       envOrDefault("PORT", "80"),
 		UseMock:    envOrDefault("USE_MOCK", "true") == "true",
 	}
 }
