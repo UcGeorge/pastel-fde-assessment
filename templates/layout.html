@@ -164,14 +164,25 @@
 
             <!-- API Status -->
             <div class="p-4 border-t border-surface-800/80">
-                <div class="flex items-center gap-2.5">
-                    <span class="relative flex h-2 w-2">
+                {{if .UseMock}}
+                <div class="flex items-center gap-2.5 mb-1.5">
+                    <span class="relative flex h-2 w-2 flex-shrink-0">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                    </span>
+                    <span class="text-xs font-medium text-amber-400/80">Mock Mode</span>
+                </div>
+                <p class="text-[10px] text-slate-600 leading-relaxed">Responses are <span class="text-slate-500">simulated</span> — no live API calls are made. Set <code class="text-slate-400 bg-surface-800/60 px-0.5 rounded">USE_MOCK=false</code> to connect to Sigma.</p>
+                {{else}}
+                <div class="flex items-center gap-2.5 mb-1.5">
+                    <span class="relative flex h-2 w-2 flex-shrink-0">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
-                    <span class="text-xs text-slate-500">Live API Connected</span>
+                    <span class="text-xs font-medium text-emerald-400/80">Live API Connected</span>
                 </div>
-                <p class="text-[10px] text-slate-600 mt-1.5 leading-relaxed">Sigma AI — Pastel Africa</p>
+                <p class="text-[10px] text-slate-600 leading-relaxed">Requests are sent to the <span class="text-slate-500">Sigma AI API</span> in real time. Pastel Africa.</p>
+                {{end}}
             </div>
         </aside>
 

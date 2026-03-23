@@ -12,19 +12,21 @@ import (
 type AdverseMediaHandler struct {
 	tmpl    *template.Template
 	service *services.AdverseMediaService
+	useMock bool
 }
 
 // NewAdverseMediaHandler creates a new AdverseMediaHandler.
-func NewAdverseMediaHandler(tmpl *template.Template, service *services.AdverseMediaService) *AdverseMediaHandler {
-	return &AdverseMediaHandler{tmpl: tmpl, service: service}
+func NewAdverseMediaHandler(tmpl *template.Template, service *services.AdverseMediaService, useMock bool) *AdverseMediaHandler {
+	return &AdverseMediaHandler{tmpl: tmpl, service: service, useMock: useMock}
 }
 
 // Page renders the adverse media screening form.
 func (h *AdverseMediaHandler) Page(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	h.tmpl.ExecuteTemplate(w, "layout", map[string]any{
-		"Page":  "adverse_media",
-		"Title": "Adverse Media Screening — Sigma",
+		"Page":    "adverse_media",
+		"Title":   "Adverse Media Screening — Sigma",
+		"UseMock": h.useMock,
 	})
 }
 

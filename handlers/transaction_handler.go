@@ -13,19 +13,21 @@ import (
 type TransactionHandler struct {
 	tmpl    *template.Template
 	service *services.TransactionService
+	useMock bool
 }
 
 // NewTransactionHandler creates a new TransactionHandler.
-func NewTransactionHandler(tmpl *template.Template, service *services.TransactionService) *TransactionHandler {
-	return &TransactionHandler{tmpl: tmpl, service: service}
+func NewTransactionHandler(tmpl *template.Template, service *services.TransactionService, useMock bool) *TransactionHandler {
+	return &TransactionHandler{tmpl: tmpl, service: service, useMock: useMock}
 }
 
 // Page renders the transaction monitoring form page.
 func (h *TransactionHandler) Page(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	h.tmpl.ExecuteTemplate(w, "layout", map[string]any{
-		"Page":  "transaction",
-		"Title": "Transaction Monitoring — Sigma",
+		"Page":    "transaction",
+		"Title":   "Transaction Monitoring — Sigma",
+		"UseMock": h.useMock,
 	})
 }
 

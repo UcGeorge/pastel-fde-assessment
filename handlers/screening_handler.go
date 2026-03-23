@@ -12,19 +12,21 @@ import (
 type ScreeningHandler struct {
 	tmpl    *template.Template
 	service *services.ScreeningService
+	useMock bool
 }
 
 // NewScreeningHandler creates a new ScreeningHandler.
-func NewScreeningHandler(tmpl *template.Template, service *services.ScreeningService) *ScreeningHandler {
-	return &ScreeningHandler{tmpl: tmpl, service: service}
+func NewScreeningHandler(tmpl *template.Template, service *services.ScreeningService, useMock bool) *ScreeningHandler {
+	return &ScreeningHandler{tmpl: tmpl, service: service, useMock: useMock}
 }
 
 // Page renders the PEP/Sanctions screening form.
 func (h *ScreeningHandler) Page(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	h.tmpl.ExecuteTemplate(w, "layout", map[string]any{
-		"Page":  "screening",
-		"Title": "PEP & Sanctions Screening — Sigma",
+		"Page":    "screening",
+		"Title":   "PEP & Sanctions Screening — Sigma",
+		"UseMock": h.useMock,
 	})
 }
 

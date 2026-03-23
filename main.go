@@ -41,10 +41,10 @@ func main() {
 	adverseService := do.MustInvoke[*services.AdverseMediaService](injector)
 
 	// Create handlers with injected dependencies
-	homeHandler := handlers.NewHomeHandler(tmpl)
-	txnHandler := handlers.NewTransactionHandler(tmpl, txnService)
-	screenHandler := handlers.NewScreeningHandler(tmpl, screenService)
-	adverseHandler := handlers.NewAdverseMediaHandler(tmpl, adverseService)
+	homeHandler := handlers.NewHomeHandler(tmpl, cfg.UseMock)
+	txnHandler := handlers.NewTransactionHandler(tmpl, txnService, cfg.UseMock)
+	screenHandler := handlers.NewScreeningHandler(tmpl, screenService, cfg.UseMock)
+	adverseHandler := handlers.NewAdverseMediaHandler(tmpl, adverseService, cfg.UseMock)
 
 	// Setup HTTP routes
 	mux := http.NewServeMux()
