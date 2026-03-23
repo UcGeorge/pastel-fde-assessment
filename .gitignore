@@ -10,3 +10,6 @@ sigma-app
 
 # Secrets
 .env.docker
+
+# Tests
+cmd/test

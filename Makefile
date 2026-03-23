@@ -17,4 +17,8 @@ stop:
 logs:
 	docker compose logs -f
 
+test:
+	clear
+	go run cmd/test/main.go
+
 .PHONY: tree run start stop logs

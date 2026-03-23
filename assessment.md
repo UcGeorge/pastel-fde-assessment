@@ -16,14 +16,13 @@ The goal is not just to make API calls. You are expected to build a clear, well-
 
 ### **What we are evaluating**
 
-|                         |                                                                                                                      |
-| :---------------------- | :------------------------------------------------------------------------------------------------------------------- |
-| **API comprehension**   | Can you independently read documentation and correctly implement an unfamiliar API?                                  |
-| **Data presentation**   | Do you present complex API responses in a way that is clean, structured, and accessible to a non-technical customer? |
-| **Attention to detail** | Are all required fields present and correctly formatted? Are edge cases (missing fields, error responses) handled?   |
-| **Product**             | Do you go beyond the bare minimum? Does your output help a                                                           |
-| **thinking**            | customer understand what the API is telling them and why it matters?                                                 |
-| **Communication**       | Is your README and submission clear? Could a Pastel customer success team member understand your demo?               |
+|                         |                                                                                                                                 |
+| :---------------------- | :------------------------------------------------------------------------------------------------------------------------------ |
+| **API comprehension**   | Can you independently read documentation and correctly implement an unfamiliar API?                                             |
+| **Data presentation**   | Do you present complex API responses in a way that is clean, structured, and accessible to a non-technical customer?            |
+| **Attention to detail** | Are all required fields present and correctly formatted? Are edge cases (missing fields, error responses) handled?              |
+| **Product thinking**    | Do you go beyond the bare minimum? Does your output help a customer understand what the API is telling them and why it matters? |
+| **Communication**       | Is your README and submission clear? Could a Pastel customer success team member understand your demo?                          |
 
 ## **Your Task**
 

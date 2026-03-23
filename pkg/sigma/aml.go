@@ -87,8 +87,8 @@ func (c *Client) CheckPEP(ctx context.Context, req *ScreeningRequest) (*Screenin
 func (c *Client) CheckSanction(ctx context.Context, req *ScreeningRequest) (*ScreeningResponse, error) {
 	var resp ScreeningResponse
 
-	// NOTE: The provided documentation has a typo "sacntion".
-	err := c.doAMLRequest(ctx, "POST", "api/v1/aml/sacntion/instant", req, &resp)
+	// NOTE: The provided documentation has a typo "sacntion". Changing to "sanction"
+	err := c.doAMLRequest(ctx, "POST", "api/v1/aml/sanction/instant", req, &resp)
 	if err != nil {
 		return nil, err
 	}
